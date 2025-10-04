@@ -1,0 +1,19 @@
+[project]
+name = "changeLang"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "llama-cpp-python==0.3.16"
+]
+
+[tool.uv.sources]
+llama-cpp-python = [
+    {index = "llama-cpp-python-cu124"}
+]
+
+[[tool.uv.index]]
+name = "llama-cpp-python-cu124"
+url = "https://abetlen.github.io/llama-cpp-python/whl/cu124"
+explicit = true
