@@ -21,3 +21,8 @@ llama-cpp-python = [
 name = "llama-cpp-python-cu124"
 url = "https://abetlen.github.io/llama-cpp-python/whl/cu124"
 explicit = true
+
+[dependency-groups]
+dev = [
+    "fastapi-cli[standard-no-fastapi-cloud-cli]>=0.0.13",
+]
