@@ -37,7 +37,7 @@
 
 	<div class="translator-box">
 		<div class="language-selector">
-			<LangSelect {options} select={sourceLang} />
+			<LangSelect {options} bind:value={sourceLang} />
 
 			<button class="swap-btn" id="swapBtn" title="Swap Languages" onclick={swapLang}>
 				<svg class="swap-icon" viewBox="0 0 24 24">
@@ -45,7 +45,7 @@
 				</svg>
 			</button>
 
-			<LangSelect {options} select={targetLang} />
+			<LangSelect {options} bind:value={targetLang} />
 		</div>
 
 		<div class="translation-area">

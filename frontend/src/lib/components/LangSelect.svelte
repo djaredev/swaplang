@@ -1,14 +1,10 @@
 <script lang="ts">
-	let { options, select }: { options: string[]; select: string } = $props();
+	let { options, value = $bindable() }: { options: string[]; value: string } = $props();
 </script>
 
-<select class="language-select" id="sourceLang">
+<select class="language-select" id="sourceLang" bind:value>
 	{#each options as lang, i (i)}
-		{#if select === lang}
-			<option value={lang} selected>{lang}</option>
-		{:else}
-			<option value={lang}>{lang}</option>
-		{/if}
+		<option value={lang}>{lang}</option>
 	{/each}
 </select>
 
