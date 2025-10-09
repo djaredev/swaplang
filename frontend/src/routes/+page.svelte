@@ -229,18 +229,8 @@
 		align-items: center;
 		justify-content: center;
 		color: #5f6368;
-		opacity: 0;
-		pointer-events: none;
-		transition:
-			opacity 0.2s,
-			background-color 0.2s;
 		flex-shrink: 0;
 		transform: translate(0px, -8px);
-	}
-
-	.clear-btn.visible {
-		opacity: 1;
-		pointer-events: auto;
 	}
 
 	.clear-btn:hover {
