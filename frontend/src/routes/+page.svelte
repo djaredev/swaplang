@@ -16,6 +16,11 @@
 		'Hindi'
 	];
 	let select = $state('Francés');
+	let sourceText = $state('');
+
+	const clearText = () => {
+		sourceText = '';
+	};
 </script>
 
 <div class="container">
@@ -45,14 +50,17 @@
 						id="sourceText"
 						placeholder="Type here to translate"
 						maxlength="5000"
+						bind:value={sourceText}
 					></textarea>
-					<button class="clear-btn visible" id="clearBtn" title="Clear text">
-						<svg viewBox="0 0 24 24">
-							<path
-								d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-							/>
-						</svg>
-					</button>
+					{#if sourceText}
+						<button class="clear-btn" id="clearBtn" title="Clear text" onclick={clearText}>
+							<svg viewBox="0 0 24 24">
+								<path
+									d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+								/>
+							</svg>
+						</button>
+					{/if}
 				</div>
 				<div class="input-content">
 					<div class="char-count" id="charCount">0 / 5000</div>
