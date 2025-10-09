@@ -22,6 +22,7 @@
 
 	const clearText = () => {
 		sourceText = '';
+		targetText = '';
 	};
 
 	const swapLang = () => {
