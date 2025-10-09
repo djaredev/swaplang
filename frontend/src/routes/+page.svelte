@@ -69,7 +69,7 @@
 					{/if}
 				</div>
 				<div class="input-content">
-					<div class="char-count" id="charCount">0 / 5000</div>
+					<div class="char-count" id="charCount">{sourceText.length} / 5000</div>
 				</div>
 			</div>
 
