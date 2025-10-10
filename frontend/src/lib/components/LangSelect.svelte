@@ -1,8 +1,12 @@
 <script lang="ts">
-	let { options, value = $bindable() }: { options: string[]; value: string } = $props();
+	let {
+		options,
+		value = $bindable(),
+		...restProps
+	}: { options: string[]; value: string } = $props();
 </script>
 
-<select class="language-select" id="sourceLang" bind:value>
+<select class="language-select" id="sourceLang" bind:value {...restProps}>
 	{#each options as lang, i (i)}
 		<option value={lang}>{lang}</option>
 	{/each}
