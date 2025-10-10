@@ -17,6 +17,7 @@
 	];
 
 	let sourceText = $state('');
+	let targetText = $state('');
 	let sourceLang = $state('Spanish');
 	let targetLang = $state('English');
 
@@ -75,7 +76,7 @@
 			</div>
 
 			<div class="output-section">
-				<div class="text-output" id="translatedText"></div>
+				<div class="text-output" id="translatedText">{targetText}</div>
 				<div class="action-buttons">
 					<button class="icon-btn" id="copyBtn" title="Copy translation">
 						<svg viewBox="0 0 24 24">
