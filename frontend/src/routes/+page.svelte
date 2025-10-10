@@ -16,6 +16,8 @@
 		'Hindi'
 	];
 
+	let typingTime: NodeJS.Timeout;
+
 	let sourceText = $state('');
 	let targetText = $state('');
 	let sourceLang = $state('Spanish');
@@ -28,6 +30,27 @@
 
 	const swapLang = () => {
 		[sourceLang, targetLang] = [targetLang, sourceLang];
+		sourceText = targetText;
+		targetText = '';
+		translate();
+	};
+
+	const translate = async () => {
+		clearTimeout(typingTime);
+		typingTime = setTimeout(async () => {
+			const response = await fetch(
+				`http://localhost:8000/api/changelang?text=${sourceText}&source_language=${sourceLang}&target_language=${targetLang}`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				}
+			);
+			const data = await response.json();
+			console.log(data);
+			targetText = data['translation'];
+		}, 3000);
 	};
 </script>
 
@@ -47,7 +70,7 @@
 				</svg>
 			</button>
 
-			<LangSelect {options} bind:value={targetLang} />
+			<LangSelect {options} bind:value={targetLang} onchange={translate} />
 		</div>
 
 		<div class="translation-area">
@@ -59,6 +82,7 @@
 						placeholder="Type here to translate"
 						maxlength="5000"
 						bind:value={sourceText}
+						oninput={translate}
 					></textarea>
 					{#if sourceText}
 						<button class="clear-btn" id="clearBtn" title="Clear text" onclick={clearText}>
