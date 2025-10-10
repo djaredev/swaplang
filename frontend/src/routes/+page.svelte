@@ -36,6 +36,7 @@
 	};
 
 	const translate = async () => {
+		if (!sourceText) clearText();
 		if (sourceLang === targetLang || sourceText === '') {
 			clearTimeout(typingTime);
 			return;
