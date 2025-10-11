@@ -277,6 +277,10 @@
 		overflow-wrap: break-word;
 	}
 
+	.text-output {
+		pointer-events: none;
+	}
+
 	.char-count {
 		color: #5f6368;
 		font-size: 12px;
