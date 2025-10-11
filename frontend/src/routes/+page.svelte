@@ -61,6 +61,20 @@
 	const copyToClipboard = async () => {
 		await navigator.clipboard.writeText(targetText);
 	};
+
+	const maxlength = (e: InputEvent) => {
+		const text = input.innerText;
+
+		// Always allow deletion
+		if (e.inputType.includes('delete')) {
+			return;
+		}
+
+		// Cancel if the limit has already been reached
+		if (text.length >= 5000) {
+			e.preventDefault();
+		}
+	};
 </script>
 
 <div class="container">
