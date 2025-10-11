@@ -44,7 +44,7 @@
 		clearTimeout(typingTime);
 		typingTime = setTimeout(async () => {
 			const response = await fetch(
-				`http://localhost:8000/api/changelang?text=${sourceText}&source_language=${sourceLang}&target_language=${targetLang}`,
+				`http://localhost:8000/api/changelang?text=${encodeURIComponent(sourceText)}&source_language=${sourceLang}&target_language=${targetLang}`,
 				{
 					method: 'POST',
 					headers: {
