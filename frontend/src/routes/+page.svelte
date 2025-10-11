@@ -110,6 +110,7 @@
 					<div
 						class="text-input"
 						id="translatedText"
+						placeholder="Type here to translate"
 						contenteditable="plaintext-only"
 						bind:innerText={sourceText}
 						bind:this={input}
@@ -269,7 +270,8 @@
 		flex-direction: column;
 	}
 
-	.text-input::placeholder {
+	.text-input:empty::before {
+		content: attr(placeholder);
 		color: #9aa0a6;
 	}
 
