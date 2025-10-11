@@ -8,6 +8,7 @@ dependencies = [
     "email-validator>=2.3.0",
     "fastapi>=0.118.0",
     "llama-cpp-python==0.3.16",
+    "sqlmodel>=0.0.27",
     "uvicorn>=0.37.0",
     "uvloop>=0.21.0",
 ]
