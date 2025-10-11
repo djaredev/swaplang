@@ -37,7 +37,6 @@
 	};
 
 	const translate = async () => {
-		if (!sourceText) clearText();
 		if (sourceLang === targetLang || sourceText === '') {
 			clearTimeout(typingTime);
 			return;
@@ -61,6 +60,13 @@
 
 	const copyToClipboard = async () => {
 		await navigator.clipboard.writeText(targetText);
+	};
+
+	const fixtInput = () => {
+		if (sourceText === '\n') {
+			sourceText = '';
+			clearText();
+		}
 	};
 
 	const maxlength = (e: InputEvent) => {
@@ -106,7 +112,10 @@
 						contenteditable="plaintext-only"
 						bind:innerText={sourceText}
 						bind:this={input}
-						oninput={translate}
+						oninput={() => {
+							fixtInput();
+							translate();
+						}}
 						onbeforeinput={maxlength}
 					></div>
 					{#if sourceText}
