@@ -27,6 +27,7 @@
 	const clearText = () => {
 		sourceText = '';
 		targetText = '';
+		clearTimeout(typingTime);
 	};
 
 	const swapLang = () => {
