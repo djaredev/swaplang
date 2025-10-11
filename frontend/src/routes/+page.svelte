@@ -17,6 +17,7 @@
 	];
 
 	let typingTime: NodeJS.Timeout;
+	let input: HTMLDivElement;
 
 	let sourceText = $state('');
 	let targetText = $state('');
