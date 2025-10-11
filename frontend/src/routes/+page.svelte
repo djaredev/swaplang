@@ -99,14 +99,15 @@
 		<div class="translation-area">
 			<div class="input-section">
 				<div class="input-header">
-					<textarea
+					<div
 						class="text-input"
-						id="sourceText"
-						placeholder="Type here to translate"
-						maxlength="5000"
-						bind:value={sourceText}
+						id="translatedText"
+						contenteditable="plaintext-only"
+						bind:innerText={sourceText}
+						bind:this={input}
 						oninput={translate}
-					></textarea>
+						onbeforeinput={maxlength}
+					></div>
 					{#if sourceText}
 						<button class="clear-btn" id="clearBtn" title="Clear text" onclick={clearText}>
 							<svg viewBox="0 0 24 24">
@@ -123,7 +124,12 @@
 			</div>
 
 			<div class="output-section">
-				<div class="text-output" id="translatedText">{targetText}</div>
+				<div
+					class="text-output"
+					id="translatedText"
+					contenteditable="plaintext-only"
+					bind:innerText={targetText}
+				></div>
 				<div class="action-buttons">
 					{#if targetText}
 						<button
@@ -229,6 +235,7 @@
 
 	.input-section {
 		border-right: 1px solid #e8eaed;
+		overflow: hidden;
 	}
 
 	.input-header {
@@ -251,27 +258,22 @@
 		flex-direction: column;
 	}
 
-	.text-input {
-		width: 100%;
-		border: none;
-		outline: none;
-		font-size: 18px;
-		font-family: inherit;
-		resize: none;
-		min-height: 200px;
-		color: #3c4043;
-	}
-
 	.text-input::placeholder {
 		color: #9aa0a6;
 	}
 
+	.text-input,
 	.text-output {
 		width: 100%;
 		font-size: 18px;
 		color: #3c4043;
 		min-height: 200px;
-		line-height: 1.5;
+		line-height: 1.2;
+		outline: none;
+		overflow-y: auto;
+		white-space: pre-wrap;
+		word-wrap: break-word;
+		overflow-wrap: break-word;
 	}
 
 	.char-count {
