@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from swaplang.translator.translate import translate
+from swaplang.translator import translate
 
 app = FastAPI()
 
