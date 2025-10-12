@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from change_lang.translator.translate import translate
+from swaplang.translator.translate import translate
 
 app = FastAPI()
 
@@ -13,6 +13,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.get("/")
+async def root():
+    return {"message": "Hello, world"}
 
 
 @app.post("/api/changelang")

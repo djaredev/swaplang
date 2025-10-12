@@ -1,5 +1,5 @@
 from llama_cpp import CreateChatCompletionResponse
-from change_lang.translator.model import get_model
+from swaplang.translator.model import get_model
 
 SYSTEM_PROMPT = """\
 You are a specialized language translator. Your only function is to translate text between languages following these strict rules:
