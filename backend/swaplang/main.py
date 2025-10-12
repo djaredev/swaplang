@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
 from swaplang.translator import translate
+from swaplang.database import init_db
+
+init_db()
 
 app = FastAPI()
 

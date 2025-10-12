@@ -1,8 +1,10 @@
+import logging
 from sqlmodel import SQLModel, Session, create_engine, select
 from swaplang.config import settings
 from swaplang.models import User
 from swaplang.auth import get_password_hash
 
+logger = logging.getLogger("database")
 
 engine = create_engine(settings.DATABASE_URL, echo=True)  # echo=True for debugging
 
@@ -25,3 +27,16 @@ def create_superuser(session: Session):
     session.refresh(superuser)
     return superuser
 
+
+def init_db():
+    logger.info("Initializing database...")
+    create_db_and_tables()
+    with Session(engine) as session:
+        user = session.exec(select(User).limit(1)).first()
+        if not user:
+            logger.info("Creating superuser...")
+            create_superuser(session)
+            logger.info("Superuser created.")
+        else:
+            logger.info("Superuser already exists.")
+    logger.info("Database initialized.")
