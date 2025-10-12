@@ -26,37 +26,6 @@ wheels = [
 ]
 
 [[package]]
-name = "changelang"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "email-validator" },
-    { name = "fastapi" },
-    { name = "llama-cpp-python" },
-    { name = "sqlmodel" },
-    { name = "uvicorn" },
-    { name = "uvloop" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "fastapi-cli", extra = ["standard-no-fastapi-cloud-cli"] },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "email-validator", specifier = ">=2.3.0" },
-    { name = "fastapi", specifier = ">=0.118.0" },
-    { name = "llama-cpp-python", specifier = "==0.3.16", index = "https://abetlen.github.io/llama-cpp-python/whl/cu124" },
-    { name = "sqlmodel", specifier = ">=0.0.27" },
-    { name = "uvicorn", specifier = ">=0.37.0" },
-    { name = "uvloop", specifier = ">=0.21.0" },
-]
-
-[package.metadata.requires-dev]
-dev = [{ name = "fastapi-cli", extras = ["standard-no-fastapi-cloud-cli"], specifier = ">=0.0.13" }]
-
-[[package]]
 name = "click"
 version = "8.3.0"
 source = { registry = "https://pypi.org/simple" }
@@ -445,6 +414,20 @@ wheels = [
 ]
 
 [[package]]
+name = "pydantic-settings"
+version = "2.11.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "python-dotenv" },
+    { name = "typing-inspection" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/20/c5/dbbc27b814c71676593d1c3f718e6cd7d4f00652cefa24b75f7aa3efb25e/pydantic_settings-2.11.0.tar.gz", hash = "sha256:d0e87a1c7d33593beb7194adb8470fc426e95ba02af83a0f23474a04c9a08180", size = 188394, upload-time = "2025-09-24T14:19:11.764Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/83/d6/887a1ff844e64aa823fb4905978d882a633cfe295c32eacad582b78a7d8b/pydantic_settings-2.11.0-py3-none-any.whl", hash = "sha256:fe2cea3413b9530d10f3a5875adffb17ada5c1e1bab0b2885546d7310415207c", size = 48608, upload-time = "2025-09-24T14:19:10.015Z" },
+]
+
+[[package]]
 name = "pygments"
 version = "2.19.2"
 source = { registry = "https://pypi.org/simple" }
@@ -607,6 +590,39 @@ sdist = { url = "https://files.pythonhosted.org/packages/a7/a5/d6f429d43394057b6
 wheels = [
     { url = "https://files.pythonhosted.org/packages/be/72/2db2f49247d0a18b4f1bb9a5a39a0162869acf235f3a96418363947b3d46/starlette-0.48.0-py3-none-any.whl", hash = "sha256:0764ca97b097582558ecb498132ed0c7d942f233f365b86ba37770e026510659", size = 73736, upload-time = "2025-09-13T08:41:03.869Z" },
 ]
+
+[[package]]
+name = "swaplang"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "email-validator" },
+    { name = "fastapi" },
+    { name = "llama-cpp-python" },
+    { name = "pydantic-settings" },
+    { name = "sqlmodel" },
+    { name = "uvicorn" },
+    { name = "uvloop" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "fastapi-cli", extra = ["standard-no-fastapi-cloud-cli"] },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "email-validator", specifier = ">=2.3.0" },
+    { name = "fastapi", specifier = ">=0.118.0" },
+    { name = "llama-cpp-python", specifier = "==0.3.16", index = "https://abetlen.github.io/llama-cpp-python/whl/cu124" },
+    { name = "pydantic-settings", specifier = ">=2.11.0" },
+    { name = "sqlmodel", specifier = ">=0.0.27" },
+    { name = "uvicorn", specifier = ">=0.37.0" },
+    { name = "uvloop", specifier = ">=0.21.0" },
+]
+
+[package.metadata.requires-dev]
+dev = [{ name = "fastapi-cli", extras = ["standard-no-fastapi-cloud-cli"], specifier = ">=0.0.13" }]
 
 [[package]]
 name = "typer"
