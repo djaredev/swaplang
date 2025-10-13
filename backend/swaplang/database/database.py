@@ -1,4 +1,6 @@
 import logging
+from typing import Annotated, Generator
+from fastapi import Depends
 from sqlmodel import SQLModel, Session, create_engine, select
 from swaplang.config import settings
 from swaplang.models import User
@@ -7,6 +9,14 @@ from swaplang.auth import get_password_hash
 logger = logging.getLogger("database")
 
 engine = create_engine(settings.DATABASE_URL, echo=True)  # echo=True for debugging
+
+
+def _get_db() -> Generator[Session, None, None]:
+    with Session(engine) as session:
+        yield session
+
+
+SessionDep = Annotated[Session, Depends(_get_db)]
 
 
 def create_db_and_tables():
