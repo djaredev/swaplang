@@ -8,6 +8,9 @@ class Settings(BaseSettings):
     SUPERUSER_USERNAME: str = Field(min_length=2, max_length=255)
     SUPERUSER_EMAIL: EmailStr = Field(max_length=255)
     SUPERUSER_PASSWORD: SecretStr = Field(min_length=8, max_length=40)
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    SECRET_KEY: SecretStr
 
     @computed_field
     @property
