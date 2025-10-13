@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from swaplang.translator import translate
 from swaplang.database import init_db
+from swaplang.api import router
 
 init_db()
 
@@ -16,15 +16,4 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-@app.get("/")
-async def root():
-    return {"message": "Hello, world"}
-
-
-@app.post("/api/changelang")
-async def change_lang(text: str, source_language: str, target_language: str):
-    translation = translate(
-        text=text, source_language=source_language, target_language=target_language
-    )
-    return {"translation": translation}
+app.include_router(router)
