@@ -17,6 +17,11 @@ class TranslationUpdate(SQLModel):
     target_lang: str | None = Field(default=None)
 
 
+class Translated(SQLModel):
+    lang: str
+    text: str
+
+
 class TranslationPublic(TranslationBase):
     id: UUID = Field(default_factory=uuid4, primary_key=True)
     create_at: datetime = Field(default_factory=lambda: datetime.now())
