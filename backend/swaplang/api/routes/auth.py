@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, Response, status
 from fastapi.security import OAuth2PasswordRequestForm
 
 from swaplang.auth.token import create_access_token
+from swaplang.auth.user import AuthUserDep
 from swaplang.database import SessionDep
 from swaplang.models import UserPublic
 from swaplang.services import auth_service as service
@@ -34,4 +35,9 @@ async def login(
         secure=False,
     )
 
+    return user
+
+
+@router.get("/whoami", response_model=UserPublic)
+async def whoami(user: AuthUserDep):
     return user
