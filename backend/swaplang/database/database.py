@@ -4,7 +4,7 @@ from fastapi import Depends
 from sqlmodel import SQLModel, Session, create_engine, select
 from swaplang.config import settings
 from swaplang.models import User
-from swaplang.auth import get_password_hash
+from swaplang.services import user_service as service
 
 logger = logging.getLogger("database")
 
@@ -23,21 +23,6 @@ def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
 
 
-def create_superuser(session: Session):
-    superuser = User(
-        username=settings.SUPERUSER_USERNAME,
-        email=settings.SUPERUSER_EMAIL,
-        hashed_password=get_password_hash(
-            settings.SUPERUSER_PASSWORD.get_secret_value()
-        ),
-        is_superuser=True,
-    )
-    session.add(superuser)
-    session.commit()
-    session.refresh(superuser)
-    return superuser
-
-
 def init_db():
     logger.info("Initializing database...")
     create_db_and_tables()
@@ -45,7 +30,7 @@ def init_db():
         user = session.exec(select(User).limit(1)).first()
         if not user:
             logger.info("Creating superuser...")
-            create_superuser(session)
+            service.create_superuser(session)
             logger.info("Superuser created.")
         else:
             logger.info("Superuser already exists.")
