@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, Response, status
 from fastapi.security import OAuth2PasswordRequestForm
 
-from swaplang.auth import create_access_token
+from swaplang.auth.token import create_access_token
 from swaplang.database import SessionDep
 from swaplang.models import UserPublic
 from swaplang.services import auth_service as service
