@@ -84,6 +84,17 @@ async def update_translation(
     )
     if not updated_translation:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Note not found"
+            status_code=status.HTTP_404_NOT_FOUND, detail="Translation not found"
         )
     return updated_translation
+
+
+@router.delete("/translation/{}")
+async def delete_translation(user: AuthUserDep, session: SessionDep, id: UUID):
+    deleted_translation = translate_service.delete_translation(
+        user=user, session=session, id=id
+    )
+    if not deleted_translation:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Translation not found"
+        )
