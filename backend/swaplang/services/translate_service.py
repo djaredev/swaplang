@@ -1,7 +1,9 @@
+from datetime import datetime
 from typing import Sequence
+from uuid import UUID
 from sqlmodel import Session, and_, col, or_, select
 
-from swaplang.models import Translation, User, Direction, Cursor
+from swaplang.models import Translation, User, Direction, Cursor, TranslationUpdate
 from swaplang.utils.cursor import decode_cursor, encode_cursor
 
 
@@ -65,3 +67,18 @@ def get_translations(
     return translations, encode_cursor(
         Cursor(id=translations[-1].id, created_at=translations[-1].created_at)
     )
+
+
+def update_translation(
+    user: User, session: Session, id: UUID, translation_update: TranslationUpdate
+):
+    db_translation = session.get(Translation, id)
+    print(f"TRANSLATION {db_translation}")
+    if not db_translation or db_translation.user_id != user.id:
+        return None
+    db_translation.sqlmodel_update(translation_update.model_dump(exclude_unset=True))
+    db_translation.updated_at = datetime.now()
+    session.add(db_translation)
+    session.commit()
+    session.refresh(db_translation)
+    return db_translation
