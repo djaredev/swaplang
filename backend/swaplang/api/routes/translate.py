@@ -1,8 +1,15 @@
+from uuid import UUID
 from fastapi import APIRouter, HTTPException, status
 
 from swaplang.auth.user import AuthUserDep
 from swaplang.database import SessionDep
-from swaplang.models import Translated, Direction, TranslationsPublic
+from swaplang.models import (
+    Translated,
+    Direction,
+    TranslationsPublic,
+    TranslationPublic,
+    TranslationUpdate,
+)
 from swaplang.translator import translate
 from swaplang.services import language_service
 from swaplang.services import translate_service
@@ -63,3 +70,20 @@ async def get_translations(
         limit=limit,
     )
     return TranslationsPublic(translations=translations, next_cursor=next_cursor)
+
+
+@router.patch("/translation/{id}", response_model=TranslationPublic)
+async def update_translation(
+    user: AuthUserDep,
+    session: SessionDep,
+    id: UUID,
+    translation_update: TranslationUpdate,
+):
+    updated_translation = translate_service.update_translation(
+        user=user, session=session, id=id, translation_update=translation_update
+    )
+    if not updated_translation:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Note not found"
+        )
+    return updated_translation
