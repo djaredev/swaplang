@@ -25,8 +25,8 @@ class Translated(SQLModel):
 
 class TranslationPublic(TranslationBase):
     id: UUID = Field(default_factory=uuid4, primary_key=True)
-    create_at: datetime = Field(default_factory=lambda: datetime.now())
-    update_at: datetime = Field(default_factory=lambda: datetime.now())
+    created_at: datetime = Field(default_factory=lambda: datetime.now())
+    updated_at: datetime = Field(default_factory=lambda: datetime.now())
 
 
 class TranslationCreate(TranslationBase): ...
