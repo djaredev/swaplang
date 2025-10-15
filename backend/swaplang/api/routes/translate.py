@@ -5,6 +5,7 @@ from swaplang.database import SessionDep
 from swaplang.models import Translated
 from swaplang.translator import translate
 from swaplang.services import language_service
+from swaplang.services import translate_service
 
 router = APIRouter()
 
@@ -35,4 +36,12 @@ async def swap_lang(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Error while translating",
         )
+    translate_service.create_translate(
+        session=session,
+        user=user,
+        source_lang=source_language,
+        source_text=text,
+        target_lang=target_language,
+        target_text=translation,
+    )
     return Translated(lang=target_language, text=translation)
