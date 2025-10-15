@@ -82,3 +82,12 @@ def update_translation(
     session.commit()
     session.refresh(db_translation)
     return db_translation
+
+
+def delete_translation(user: User, session: Session, id: UUID):
+    db_translation = session.get(Translation, id)
+    if not db_translation or db_translation.user_id != user.id:
+        return None
+    session.delete(db_translation)
+    session.commit()
+    return True
