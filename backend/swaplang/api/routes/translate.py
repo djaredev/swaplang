@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, status
 
 from swaplang.auth.user import AuthUserDep
 from swaplang.database import SessionDep
-from swaplang.models import Translated
+from swaplang.models import Translated, Direction, TranslationsPublic
 from swaplang.translator import translate
 from swaplang.services import language_service
 from swaplang.services import translate_service
@@ -45,3 +45,21 @@ async def swap_lang(
         target_text=translation,
     )
     return Translated(lang=target_language, text=translation)
+
+
+@router.get("/translation", response_model=TranslationsPublic)
+async def get_translations(
+    user: AuthUserDep,
+    session: SessionDep,
+    cursor: str | None = None,
+    direction: Direction = Direction.NEXT,
+    limit: int = 10,
+):
+    translations, next_cursor = translate_service.get_translations(
+        user=user,
+        session=session,
+        encoded_cursor=cursor,
+        direction=direction,
+        limit=limit,
+    )
+    return TranslationsPublic(translations=translations, next_cursor=next_cursor)
