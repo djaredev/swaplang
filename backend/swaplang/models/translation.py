@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Sequence
 from uuid import UUID, uuid4
 from sqlmodel import Field, SQLModel
 
@@ -33,3 +34,8 @@ class TranslationCreate(TranslationBase): ...
 
 class Translation(TranslationPublic, table=True):
     user_id: UUID = Field(foreign_key="user.id")
+
+
+class TranslationsPublic(SQLModel):
+    translations: Sequence[Translation]
+    next_cursor: str | None
