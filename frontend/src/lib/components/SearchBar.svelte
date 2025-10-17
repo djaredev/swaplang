@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { SearchIcon, XIcon } from 'lucide-svelte';
 
-	let value = $state();
+	let { value = $bindable() } = $props();
 
 	const clean = () => {
 		value = '';
