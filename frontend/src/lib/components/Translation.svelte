@@ -26,10 +26,10 @@
 		display: flex;
 		flex-direction: column;
 		width: 1000px;
-		max-height: 211px;
 		border: 1px solid #c2cad3;
 		border-radius: 10px;
 		box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.08);
+		overflow: hidden;
 	}
 
 	.translation {
@@ -89,5 +89,46 @@
 	.target-lang {
 		flex: 1;
 		text-align: center;
+	}
+
+	@media (width < 1000px) {
+		.translation-container {
+			width: 100%;
+			flex-direction: row;
+		}
+
+		.langs {
+			flex-direction: column;
+			width: auto;
+			border-width: 1px 1px 1px 0px;
+			border-radius: 0px 10px 10px 0px;
+			height: 100px;
+		}
+
+		.source-lang {
+			display: flex;
+			align-items: end;
+			border-bottom: 1px solid #c2cad3;
+			border-right: none;
+		}
+
+		.translation {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			padding: 18px;
+		}
+
+		.source-text {
+			border-right: none;
+			padding-right: unset;
+		}
+
+		.target-text {
+			border-top: 1px solid #c2cad3;
+			padding-left: unset;
+			margin-top: 18px;
+			padding-top: 18px;
+		}
 	}
 </style>
