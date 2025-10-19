@@ -1,3 +1,5 @@
+import type { UUID } from 'crypto';
+
 export type UserLogin = {
 	username: string;
 	password: string;
@@ -18,3 +20,26 @@ export type Translated = {
 	lang: string;
 	text: string;
 };
+
+export type Translation = {
+	id: UUID;
+	source_lang: string;
+	source_text: string;
+	target_Lang: string;
+	targe_text: string;
+	created_at: string;
+	updated_at: string;
+};
+
+export type GetTranslation = {
+	cursor: string;
+	direction?: Direction;
+	limit?: number;
+};
+
+export type TranslationsPublic = {
+	translations: Translation[];
+	next_cursor: string | null;
+};
+
+export type Direction = 'next' | 'prev';
