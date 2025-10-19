@@ -1,5 +1,7 @@
+import type { UUID } from 'crypto';
 import type {
 	GetTranslation,
+	Id,
 	Translate,
 	Translated,
 	TranslationsPublic,
@@ -46,4 +48,15 @@ export const getTranslations = async (data?: GetTranslation): Promise<Translatio
 	}
 
 	return await response.json();
+};
+
+export const deleteTranslation = async (id: UUID) => {
+	const response = await fetch(apiUrl(`/translation/${id}`), {
+		method: 'DELETE',
+		credentials: 'include'
+	});
+
+	if (!response.ok) {
+		throw new Error(`Response Error: ${response.status}`);
+	}
 };
