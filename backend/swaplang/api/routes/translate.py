@@ -89,7 +89,7 @@ async def update_translation(
     return updated_translation
 
 
-@router.delete("/translation/{}")
+@router.delete("/translation/{id}")
 async def delete_translation(user: AuthUserDep, session: SessionDep, id: UUID):
     deleted_translation = translate_service.delete_translation(
         user=user, session=session, id=id
