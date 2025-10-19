@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { SearchIcon, XIcon } from 'lucide-svelte';
 
-	let { value = $bindable() } = $props();
+	let { value = $bindable(), ...restProps } = $props();
 
 	const clean = () => {
 		value = '';
@@ -10,7 +10,7 @@
 
 <div class="search-bar">
 	<SearchIcon size={20} />
-	<input class="search" type="text" bind:value />
+	<input class="search" type="text" bind:value {...restProps} />
 	{#if value}
 		<button class="clear-btn">
 			<XIcon size={20} onclick={clean} />
