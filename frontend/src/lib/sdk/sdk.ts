@@ -1,5 +1,11 @@
-import type { UserLogin, UserPublic } from './types';
-import type { Translate, Translated, UserLogin, UserPublic } from './types';
+import type {
+	GetTranslation,
+	Translate,
+	Translated,
+	TranslationsPublic,
+	UserLogin,
+	UserPublic
+} from './types';
 import { apiUrl } from './utils';
 
 export const login = async (userLogin: UserLogin): Promise<UserPublic> => {
@@ -25,6 +31,18 @@ export const translate = async (data: Translate): Promise<Translated> => {
 
 	if (!response.ok) {
 		throw new Error(`Error: ${response.status}`);
+	}
+
+	return await response.json();
+};
+
+export const getTranslations = async (data?: GetTranslation): Promise<TranslationsPublic> => {
+	const response = await fetch(apiUrl('/translation', data), {
+		credentials: 'include'
+	});
+
+	if (!response.ok) {
+		throw new Error(`Response Error: ${response.status}`);
 	}
 
 	return await response.json();
