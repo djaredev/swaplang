@@ -26,6 +26,7 @@
 		display: flex;
 		flex-direction: column;
 		width: 1000px;
+		background: white;
 		border: 1px solid #c2cad3;
 		border-radius: 10px;
 		box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.08);
@@ -67,7 +68,7 @@
 		left: 0;
 		right: 0;
 		height: 1.6em;
-		background: linear-gradient(to bottom, rgba(248, 249, 250, 0) 0%, rgba(248, 249, 250, 1) 100%);
+		background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
 		pointer-events: none;
 	}
 

@@ -26,6 +26,7 @@
 		gap: 10px;
 		width: 1000px;
 		height: 48px;
+		background: white;
 		padding-right: 14px;
 		padding-left: 14px;
 		border: 1px solid #c2cad3;
