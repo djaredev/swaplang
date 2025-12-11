@@ -25,8 +25,8 @@ export type Translation = {
 	id: UUID;
 	source_lang: string;
 	source_text: string;
-	target_Lang: string;
-	targe_text: string;
+	target_lang: string;
+	target_text: string;
 	created_at: string;
 	updated_at: string;
 };
