@@ -1,19 +1,18 @@
 <script lang="ts">
-	let { translation } = $props();
+	import type { Translation } from '$lib/sdk/types';
+	import { onMount } from 'svelte';
+
+	let { translation }: { translation: Translation } = $props();
 </script>
 
 <div class="translation-container">
 	<div class="langs">
-		<div class="source-lang">{translation.sourceLang}</div>
-		<div class="target-lang">{translation.targetLang}</div>
+		<div class="source-lang">{translation.source_lang}</div>
+		<div class="target-lang">{translation.target_lang}</div>
 	</div>
 	<div class="translation">
-		<div class="source-text">
-			{translation.sourceText}
-		</div>
-		<div class="target-text">
-			{translation.targetText}
-		</div>
+		<div class="source-text">{translation.source_text}</div>
+		<div class="target-text">{translation.target_text}</div>
 	</div>
 </div>
 
