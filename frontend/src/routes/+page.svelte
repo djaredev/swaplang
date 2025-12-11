@@ -1,5 +1,6 @@
 <script lang="ts">
 	import LangSelect from '$lib/components/LangSelect.svelte';
+	import { HistoryIcon } from 'lucide-svelte';
 
 	let options = [
 		'Spanish',
@@ -162,8 +163,44 @@
 		</div>
 	</div>
 </div>
+<div class="footer">
+	<a
+		class="history-btn"
+		href="/history"
+		title="Translation History"
+		data-sveltekit-preload-data="off"
+	>
+		<HistoryIcon size="40" color="#5f6368" />
+	</a>
 
+	<div>History</div>
+</div>
 <style>
+	.footer {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		bottom: 20px;
+		right: 20px;
+		padding: 40px;
+		gap: 10px;
+	}
+	.history-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 70px;
+		height: 70px;
+		background: white;
+		border-radius: 50%;
+		box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+		border: none;
+	}
+
+	.history-btn:hover {
+		background-color: #f1f3f4;
+	}
 	.container {
 		max-width: 1200px;
 		margin: 0 auto;
