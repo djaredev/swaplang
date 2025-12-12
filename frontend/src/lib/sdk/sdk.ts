@@ -25,6 +25,14 @@ export const login = async (userLogin: UserLogin): Promise<UserPublic> => {
 	return await response.json();
 };
 
+export const logout = async (): Promise<Response> => {
+	const response = await fetch(apiUrl('/logout'), {
+		method: 'POST',
+		credentials: 'include'
+	});
+	return response;
+};
+
 export const whoami = async (): Promise<UserPublic | null> => {
 	const response = await fetch(apiUrl('/whoami'), {
 		credentials: 'include'
