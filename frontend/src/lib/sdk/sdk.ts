@@ -25,6 +25,16 @@ export const login = async (userLogin: UserLogin): Promise<UserPublic> => {
 	return await response.json();
 };
 
+export const whoami = async (): Promise<UserPublic | null> => {
+	const response = await fetch(apiUrl('/whoami'), {
+		credentials: 'include'
+	});
+	if (!response.ok) {
+		return null;
+	}
+	return await response.json();
+};
+
 export const translate = async (data: Translate): Promise<Translated> => {
 	const response = await fetch(apiUrl('/translate', data), {
 		method: 'POST',
