@@ -2,20 +2,20 @@
 	import AppOptions from '$lib/components/AppOptions.svelte';
 	import LangSelect from '$lib/components/LangSelect.svelte';
 	import { HistoryIcon } from 'lucide-svelte';
+	import { translate } from '$lib/sdk/sdk';
 
-	let options = [
-		'Spanish',
-		'English',
-		'French',
-		'German',
-		'Italian',
-		'Portuguese',
-		'Russian',
-		'Japanese',
-		'Korean',
-		'Coreano',
-		'Arab',
-		'Hindi'
+	let langs = [
+		{ id: 'es', name: 'Spanish' },
+		{ id: 'en', name: 'English' },
+		{ id: 'fr', name: 'French' },
+		{ id: 'de', name: 'German' },
+		{ id: 'it', name: 'Italian' },
+		{ id: 'pt', name: 'Portuguese' },
+		{ id: 'ru', name: 'Russian' },
+		{ id: 'ja', name: 'Japanese' },
+		{ id: 'ko', name: 'Korean' },
+		{ id: 'ar', name: 'Arabic' },
+		{ id: 'hi', name: 'Hindi' }
 	];
 
 	let typingTime: NodeJS.Timeout;
@@ -23,8 +23,8 @@
 
 	let sourceText = $state('');
 	let targetText = $state('');
-	let sourceLang = $state('Spanish');
-	let targetLang = $state('English');
+	let sourceLang = $state('es');
+	let targetLang = $state('en');
 
 	const clearText = () => {
 		sourceText = '';
@@ -36,28 +36,23 @@
 		[sourceLang, targetLang] = [targetLang, sourceLang];
 		sourceText = targetText;
 		targetText = '';
-		translate();
+		getTranslation();
 	};
 
-	const translate = async () => {
+	const getTranslation = async () => {
 		if (sourceLang === targetLang || sourceText === '') {
 			clearTimeout(typingTime);
 			return;
 		}
 		clearTimeout(typingTime);
 		typingTime = setTimeout(async () => {
-			const response = await fetch(
-				`http://localhost:8000/api/changelang?text=${encodeURIComponent(sourceText)}&source_language=${sourceLang}&target_language=${targetLang}`,
-				{
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					}
-				}
-			);
-			const data = await response.json();
+			const data = await translate({
+				text: sourceText,
+				source_language: sourceLang,
+				target_language: targetLang
+			});
 			console.log(data);
-			targetText = data['translation'];
+			targetText = data.text;
 		}, 3000);
 	};
 
@@ -97,7 +92,7 @@
 	<div class="content">
 		<div class="translator-box">
 			<div class="language-selector">
-				<LangSelect {options} bind:value={sourceLang} />
+				<LangSelect options={langs} bind:value={sourceLang} />
 
 				<button class="swap-btn" id="swapBtn" title="Swap Languages" onclick={swapLang}>
 					<svg class="swap-icon" viewBox="0 0 24 24">
@@ -105,7 +100,7 @@
 					</svg>
 				</button>
 
-				<LangSelect {options} bind:value={targetLang} onchange={translate} />
+				<LangSelect options={langs} bind:value={targetLang} onchange={getTranslation} />
 			</div>
 
 			<div class="translation-area">
@@ -120,7 +115,7 @@
 							bind:this={input}
 							oninput={() => {
 								fixtInput();
-								translate();
+								getTranslation();
 							}}
 							onbeforeinput={maxlength}
 						></div>

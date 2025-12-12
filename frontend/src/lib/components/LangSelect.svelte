@@ -8,7 +8,7 @@
 
 <select class="language-select" id="sourceLang" bind:value {...restProps}>
 	{#each options as lang, i (i)}
-		<option value={lang}>{lang}</option>
+		<option value={lang.id}>{lang.name}</option>
 	{/each}
 </select>
 
