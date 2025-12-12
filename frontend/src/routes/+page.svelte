@@ -1,4 +1,5 @@
 <script lang="ts">
+	import AppOptions from '$lib/components/AppOptions.svelte';
 	import LangSelect from '$lib/components/LangSelect.svelte';
 	import { HistoryIcon } from 'lucide-svelte';
 
@@ -89,92 +90,95 @@
 <div class="container">
 	<div class="header">
 		<div class="logo">T</div>
-		<h1>Traductor</h1>
+		<h1 class="title">Traductor</h1>
+		<AppOptions />
 	</div>
 
-	<div class="translator-box">
-		<div class="language-selector">
-			<LangSelect {options} bind:value={sourceLang} />
+	<div class="content">
+		<div class="translator-box">
+			<div class="language-selector">
+				<LangSelect {options} bind:value={sourceLang} />
 
-			<button class="swap-btn" id="swapBtn" title="Swap Languages" onclick={swapLang}>
-				<svg class="swap-icon" viewBox="0 0 24 24">
-					<path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z" />
-				</svg>
-			</button>
+				<button class="swap-btn" id="swapBtn" title="Swap Languages" onclick={swapLang}>
+					<svg class="swap-icon" viewBox="0 0 24 24">
+						<path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z" />
+					</svg>
+				</button>
 
-			<LangSelect {options} bind:value={targetLang} onchange={translate} />
-		</div>
+				<LangSelect {options} bind:value={targetLang} onchange={translate} />
+			</div>
 
-		<div class="translation-area">
-			<div class="input-section">
-				<div class="input-header">
+			<div class="translation-area">
+				<div class="input-section">
+					<div class="input-header">
+						<div
+							class="text-input"
+							id="translatedText"
+							placeholder="Type here to translate"
+							contenteditable="plaintext-only"
+							bind:innerText={sourceText}
+							bind:this={input}
+							oninput={() => {
+								fixtInput();
+								translate();
+							}}
+							onbeforeinput={maxlength}
+						></div>
+						{#if sourceText}
+							<button class="clear-btn" id="clearBtn" title="Clear text" onclick={clearText}>
+								<svg viewBox="0 0 24 24">
+									<path
+										d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+									/>
+								</svg>
+							</button>
+						{/if}
+					</div>
+					<div class="input-content">
+						<div class="char-count" id="charCount">{sourceText.length} / 5000</div>
+					</div>
+				</div>
+
+				<div class="output-section">
 					<div
-						class="text-input"
+						class="text-output"
 						id="translatedText"
-						placeholder="Type here to translate"
 						contenteditable="plaintext-only"
-						bind:innerText={sourceText}
-						bind:this={input}
-						oninput={() => {
-							fixtInput();
-							translate();
-						}}
-						onbeforeinput={maxlength}
+						bind:innerText={targetText}
 					></div>
-					{#if sourceText}
-						<button class="clear-btn" id="clearBtn" title="Clear text" onclick={clearText}>
-							<svg viewBox="0 0 24 24">
-								<path
-									d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-								/>
-							</svg>
-						</button>
-					{/if}
-				</div>
-				<div class="input-content">
-					<div class="char-count" id="charCount">{sourceText.length} / 5000</div>
-				</div>
-			</div>
-
-			<div class="output-section">
-				<div
-					class="text-output"
-					id="translatedText"
-					contenteditable="plaintext-only"
-					bind:innerText={targetText}
-				></div>
-				<div class="action-buttons">
-					{#if targetText}
-						<button
-							class="icon-btn"
-							id="copyBtn"
-							title="Copy translation"
-							onclick={copyToClipboard}
-						>
-							<svg viewBox="0 0 24 24">
-								<path
-									d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
-								/>
-							</svg>
-						</button>
-					{/if}
+					<div class="action-buttons">
+						{#if targetText}
+							<button
+								class="icon-btn"
+								id="copyBtn"
+								title="Copy translation"
+								onclick={copyToClipboard}
+							>
+								<svg viewBox="0 0 24 24">
+									<path
+										d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
+									/>
+								</svg>
+							</button>
+						{/if}
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<div class="footer">
+		<a
+			class="history-btn"
+			href="/history"
+			title="Translation History"
+			data-sveltekit-preload-data="off"
+		>
+			<HistoryIcon size="40" color="#5f6368" />
+		</a>
+		<div>History</div>
+	</div>
 </div>
-<div class="footer">
-	<a
-		class="history-btn"
-		href="/history"
-		title="Translation History"
-		data-sveltekit-preload-data="off"
-	>
-		<HistoryIcon size="40" color="#5f6368" />
-	</a>
 
-	<div>History</div>
-</div>
 <style>
 	.footer {
 		display: flex;
@@ -202,8 +206,21 @@
 		background-color: #f1f3f4;
 	}
 	.container {
-		max-width: 1200px;
+		/* max-width: 1200px; */
 		margin: 0 auto;
+	}
+
+	.content {
+		display: flex;
+		/* flex-direction: column; */
+		align-items: center;
+		justify-content: center;
+		/* width: 100%; */
+		/* padding: 20px; */
+	}
+
+	.title {
+		flex: 1;
 	}
 
 	.header {
@@ -234,6 +251,8 @@
 	}
 
 	.translator-box {
+		/* flex: 1; */
+		width: 1200px;
 		background: white;
 		border-radius: 8px;
 		box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
