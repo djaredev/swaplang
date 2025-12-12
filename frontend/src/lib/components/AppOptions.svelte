@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { CircleUserRoundIcon, SettingsIcon, LogOutIcon } from 'lucide-svelte';
 	import { userState } from '$lib/state/user.svelte';
+	import { logout } from '$lib/sdk/sdk';
+	import { logout as logoutApp } from '$lib/utils/auth.svelte';
 
 	let isOpen = $state(false);
 	let dropdown: HTMLElement;
@@ -15,7 +17,12 @@
 		isOpen = false;
 	}
 
-	async function onLogout() {}
+	async function onLogout() {
+		const res = await logout();
+		if (res.ok) {
+			logoutApp();
+		}
+	}
 </script>
 
 <svelte:window onclick={isOpen ? onClose : null} />
