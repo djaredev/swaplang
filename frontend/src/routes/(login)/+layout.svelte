@@ -4,7 +4,11 @@
 	let { children } = $props();
 </script>
 
-{@render children()}
+<svelte:body />
+
+<main class="body">
+	{@render children()}
+</main>
 
 <style>
 	:global(html) {
@@ -12,13 +16,12 @@
 		width: 100%;
 	}
 
-	:global(body) {
+	.body {
 		display: flex;
 		height: 100%;
 		width: 100%;
 		margin: 0;
 		padding: 0;
-		/* background: #11111b; */
 		box-sizing: border-box;
 	}
 </style>
