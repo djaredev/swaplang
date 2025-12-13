@@ -1,7 +1,5 @@
-import type { UUID } from 'crypto';
 import type {
 	GetTranslation,
-	Id,
 	Translate,
 	Translated,
 	TranslationsPublic,
@@ -9,8 +7,9 @@ import type {
 	UserPublic
 } from './types';
 import { apiUrl } from './utils';
+import { notify } from '$lib/state/notify.svelte';
 
-export const login = async (userLogin: UserLogin): Promise<UserPublic> => {
+export const login = async (userLogin: UserLogin): Promise<Response> => {
 	const response = await fetch(apiUrl('/login'), {
 		method: 'POST',
 		headers: { 'content-type': 'application/x-www-form-urlencoded' },
@@ -18,11 +17,7 @@ export const login = async (userLogin: UserLogin): Promise<UserPublic> => {
 		body: new URLSearchParams(userLogin).toString()
 	});
 
-	if (!response.ok) {
-		throw new Error(`Error: ${response.status}`);
-	}
-
-	return await response.json();
+	return response;
 };
 
 export const logout = async (): Promise<Response> => {
@@ -43,26 +38,30 @@ export const whoami = async (): Promise<UserPublic | null> => {
 	return await response.json();
 };
 
-export const translate = async (data: Translate): Promise<Translated> => {
+export const translate = async (data: Translate): Promise<Translated | null> => {
 	const response = await fetch(apiUrl('/translate', data), {
 		method: 'POST',
 		credentials: 'include'
 	});
 
 	if (!response.ok) {
-		throw new Error(`Error: ${response.status}`);
+		notify.error((await response.json()).detail);
+		return null;
 	}
 
 	return await response.json();
 };
 
-export const getTranslations = async (data?: GetTranslation): Promise<TranslationsPublic> => {
+export const getTranslations = async (
+	data?: GetTranslation
+): Promise<TranslationsPublic | null> => {
 	const response = await fetch(apiUrl('/translation', data), {
 		credentials: 'include'
 	});
 
 	if (!response.ok) {
-		throw new Error(`Response Error: ${response.status}`);
+		notify.error((await response.json()).detail);
+		return null;
 	}
 
 	return await response.json();
