@@ -1,6 +1,7 @@
 <script lang="ts">
 	import favicon from '$lib/assets/favicon.svg';
 	import Header from '$lib/components/Header.svelte';
+	import Notify from '$lib/components/Notify.svelte';
 	import '../../app.css';
 
 	let { children } = $props();
@@ -11,6 +12,7 @@
 </svelte:head>
 
 <Header />
+<Notify />
 <main>
 	{@render children?.()}
 </main>
