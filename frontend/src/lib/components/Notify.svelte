@@ -1,0 +1,116 @@
+<script lang="ts">
+	import { notify, NotificationLayout, NotificationType } from '$lib/state/notify.svelte';
+	import {
+		CircleCheckIcon,
+		CircleXIcon,
+		InfoIcon,
+		TriangleAlertIcon,
+		type Icon as IconType
+	} from 'lucide-svelte';
+	import { slide } from 'svelte/transition';
+
+	const icons: Record<NotificationType, typeof IconType> = {
+		[NotificationType.Success]: CircleCheckIcon,
+		[NotificationType.Info]: InfoIcon,
+		[NotificationType.Error]: CircleXIcon,
+		[NotificationType.Warning]: TriangleAlertIcon
+	};
+</script>
+
+<div class="notify">
+	{#each notify.notifications as notification (notification.id)}
+		{@const Icon = icons[notification.notificationType]}
+		<div class="notification {notification.notificationType}" transition:slide={{ duration: 200 }}>
+			<div class="notification-header">
+				<Icon />
+				<span class="notification-title"
+					>{notification.title ? notification.title : notification.notificationType}
+				</span>
+			</div>
+			{#if notification.layoutType === NotificationLayout.Default}
+				<div class="notification-content">{notification.message}</div>
+				<div class="notification-footer">{notification.currentTime}</div>
+			{/if}
+		</div>
+	{/each}
+</div>
+
+<style>
+	* {
+		box-sizing: border-box;
+	}
+	.notify {
+		position: fixed;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		top: 20px;
+		right: 20px;
+		z-index: 2000;
+		max-width: 400px;
+		width: 100%;
+		background: transparent;
+
+		.notification {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			pointer-events: none;
+			background: white;
+			color: #cdd6f4;
+			padding: 16px;
+			border-radius: 10px;
+			border: 1px solid #e8eaed;
+			/* box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); */
+
+			.notification-header {
+				display: flex;
+				align-items: center;
+				font-weight: bold;
+				font-size: 16px;
+				gap: 10px;
+			}
+
+			.notification-content {
+				font-size: 14px;
+			}
+
+			.notification-footer {
+				font-size: 12px;
+				display: flex;
+				justify-content: end;
+			}
+
+			&.Success {
+				color: #40a02b;
+			}
+
+			&.Info {
+				color: #1e66f5;
+			}
+
+			&.Error {
+				color: #d20f39;
+			}
+
+			&.Warning {
+				color: #df8e1d;
+			}
+		}
+	}
+
+	@media (width <= 500px) {
+		.notify {
+			max-width: 100%;
+			top: 0;
+			right: 0;
+			padding: 10px;
+			flex-direction: row;
+			overflow-x: scroll;
+
+			.notification {
+				min-width: 100%;
+			}
+		}
+	}
+</style>
