@@ -6,6 +6,7 @@
 	import { CircleXIcon, XIcon } from 'lucide-svelte';
 	import { login } from '$lib/sdk/sdk';
 	import { slide } from 'svelte/transition';
+	import type { UserPublic } from '$lib/sdk/types';
 
 	const body = $state({
 		username: '',
@@ -16,12 +17,11 @@
 	async function onsubmit() {
 		try {
 			const res = await login(body);
-			if (res) {
-				userState.set(res);
+			if (res.status === 200) {
+				userState.set((await res.json()) as UserPublic);
 				goto('/');
 			} else {
-				// error = res.error.detail as unknown;
-				error = 'An error occurred, please try again';
+				error = (await res.json()).detail;
 			}
 		} catch {
 			error = 'An error occurred, please try again';
