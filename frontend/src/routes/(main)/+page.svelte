@@ -1,5 +1,4 @@
 <script lang="ts">
-	import AppOptions from '$lib/components/AppOptions.svelte';
 	import LangSelect from '$lib/components/LangSelect.svelte';
 	import { HistoryIcon } from 'lucide-svelte';
 	import { translate } from '$lib/sdk/sdk';
@@ -52,7 +51,9 @@
 				target_language: targetLang
 			});
 			console.log(data);
-			targetText = data.text;
+			if (data) {
+				targetText = data.text;
+			}
 		}, 3000);
 	};
 
