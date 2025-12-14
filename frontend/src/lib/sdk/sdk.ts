@@ -1,5 +1,6 @@
 import type {
 	GetTranslation,
+	Language,
 	Translate,
 	Translated,
 	TranslationsPublic,
@@ -56,6 +57,19 @@ export const getTranslations = async (
 	data?: GetTranslation
 ): Promise<TranslationsPublic | null> => {
 	const response = await fetch(apiUrl('/translation', data), {
+		credentials: 'include'
+	});
+
+	if (!response.ok) {
+		notify.error((await response.json()).detail);
+		return null;
+	}
+
+	return await response.json();
+};
+
+export const getAvailableLanguages = async (): Promise<Language[] | null> => {
+	const response = await fetch(apiUrl('/settings/languages'), {
 		credentials: 'include'
 	});
 
