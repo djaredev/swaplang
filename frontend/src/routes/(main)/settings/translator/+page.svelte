@@ -23,6 +23,10 @@
 		console.log(showSelectedOnly);
 	};
 
+	const clearSelection = () => {
+		langs = langs.map((lang) => ({ ...lang, enabled: false }));
+	};
+
 	const onsubmit = handler(async () => {});
 	$effect(() => {
 		langs;
@@ -56,7 +60,7 @@
 			{langs.filter((x) => x.enabled).length} Enabled languages
 		</div>
 		<div>
-			<button id="clear">Clear</button>
+			<button id="clear" onclick={clearSelection}>Clear</button>
 			<button id="save" class="primary">Save</button>
 		</div>
 	</div>
