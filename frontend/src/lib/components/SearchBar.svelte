@@ -9,7 +9,9 @@
 </script>
 
 <div class="search-bar">
-	<SearchIcon size={20} />
+	<div class="icon-bar">
+		<SearchIcon size={20} />
+	</div>
 	<input class="search" type="text" bind:value {...restProps} />
 	{#if value}
 		<button class="clear-btn">
@@ -24,17 +26,26 @@
 		align-items: center;
 		justify-content: space-evenly;
 		gap: 10px;
-		width: 1000px;
-		height: 48px;
+		width: 300px;
+		height: 40px;
 		background: white;
 		padding-right: 14px;
 		padding-left: 14px;
 		border: 1px solid #c2cad3;
 		border-radius: 10px;
-		box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.08);
+		overflow: hidden;
+	}
+
+	.icon-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-evenly;
+		max-width: 20px;
+		flex: 1;
 	}
 
 	.search {
+		width: 100%;
 		flex: 1;
 		height: 100%;
 		font-size: 18px;
