@@ -1,20 +1,11 @@
 <script lang="ts">
 	import SearchBar from '$lib/components/SearchBar.svelte';
 	import handler from '$lib/utils/handler';
+	import type { Language } from '$lib/sdk/types';
 
-	let langs = $state([
-		{ id: 'es', name: 'Spanish', enabled: true },
-		{ id: 'en', name: 'English', enabled: true },
-		{ id: 'fr', name: 'French', enabled: false },
-		{ id: 'de', name: 'German', enabled: false },
-		{ id: 'it', name: 'Italian', enabled: false },
-		{ id: 'pt', name: 'Portuguese', enabled: false },
-		{ id: 'ru', name: 'Russian', enabled: false },
-		{ id: 'ja', name: 'Japanese', enabled: false },
-		{ id: 'ko', name: 'Korean', enabled: false },
-		{ id: 'ar', name: 'Arabic', enabled: false },
-		{ id: 'hi', name: 'Hindi', enabled: false }
-	]);
+	let { data } = $props();
+
+	let langs: Language[] = $state(data.availablelanguages ? data.availablelanguages : []);
 
 	let showSelectedOnly = $state(false);
 
