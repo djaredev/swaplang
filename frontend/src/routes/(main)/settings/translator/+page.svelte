@@ -52,7 +52,9 @@
 	</div>
 
 	<div class="footer">
-		<div class="summary" id="summary">0 Enabled languages</div>
+		<div class="summary" id="summary">
+			{langs.filter((x) => x.enabled).length} Enabled languages
+		</div>
 		<div>
 			<button id="clear">Clear</button>
 			<button id="save" class="primary">Save</button>
