@@ -43,3 +43,9 @@ export type TranslationsPublic = {
 };
 
 export type Direction = 'next' | 'prev';
+
+export type Language = {
+	id: string;
+	name: string;
+	enabled: boolean;
+};
