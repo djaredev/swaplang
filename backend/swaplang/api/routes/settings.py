@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, status
 
 from swaplang.auth.user import AuthUserDep
 from swaplang.database.database import SessionDep
+from swaplang.models.language import LanguageUpdate
 from swaplang.services import settings_service
 
 
@@ -11,3 +12,16 @@ router = APIRouter(prefix="/settings", tags=["settings"])
 @router.get("/languages")
 async def get_available_languages(user: AuthUserDep, session: SessionDep):
     return settings_service.get_available_languages(session)
+
+
+@router.put("/languages")
+async def update_enabled_languages(
+    user: AuthUserDep, session: SessionDep, languages: list[LanguageUpdate]
+):
+    if not user.is_superuser:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="only superusers can update enabled languages",
+        )
+    settings_service.update_enabled_languages(session, languages)
+    return {"status": "enabled languages updated"}
