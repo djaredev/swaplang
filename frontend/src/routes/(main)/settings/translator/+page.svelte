@@ -2,6 +2,8 @@
 	import SearchBar from '$lib/components/SearchBar.svelte';
 	import handler from '$lib/utils/handler';
 	import type { Language } from '$lib/sdk/types';
+	import { updateLanguages } from '$lib/sdk/sdk';
+	import { notify } from '$lib/state/notify.svelte';
 
 	let { data } = $props();
 
@@ -19,6 +21,16 @@
 	};
 
 	const onsubmit = handler(async () => {});
+
+	const onsubmit = handler(async () => {
+		console.log('Submmitted');
+		if (await updateLanguages(langs.map((lang) => ({ id: lang.id, enabled: lang.enabled })))) {
+			notify.success('Languages updated successfully');
+		} else {
+			notify.error('Failed to update languages');
+		}
+	});
+
 	$effect(() => {
 		langs;
 		console.log($state.snapshot(langs));
