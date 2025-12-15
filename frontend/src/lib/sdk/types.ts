@@ -49,3 +49,8 @@ export type Language = {
 	name: string;
 	enabled: boolean;
 };
+
+export type LanguageUpdate = {
+	id: string;
+	enabled: boolean;
+};
