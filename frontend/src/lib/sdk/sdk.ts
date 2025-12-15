@@ -1,6 +1,7 @@
 import type {
 	GetTranslation,
 	Language,
+	LanguageUpdate,
 	Translate,
 	Translated,
 	TranslationsPublic,
@@ -79,4 +80,20 @@ export const getAvailableLanguages = async (): Promise<Language[] | null> => {
 	}
 
 	return await response.json();
+};
+
+export const updateLanguages = async (languages: LanguageUpdate[]): Promise<boolean> => {
+	const response = await fetch(apiUrl('/settings/languages'), {
+		method: 'PUT',
+		headers: { 'content-type': 'application/json' },
+		credentials: 'include',
+		body: JSON.stringify(languages)
+	});
+
+	if (!response.ok) {
+		notify.error((await response.json()).detail);
+		return false;
+	}
+
+	return true;
 };
