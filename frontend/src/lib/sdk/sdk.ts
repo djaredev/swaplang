@@ -1,4 +1,5 @@
 import type {
+	AvailableModels,
 	GetTranslation,
 	Language,
 	LanguageUpdate,
@@ -96,4 +97,15 @@ export const updateLanguages = async (languages: LanguageUpdate[]): Promise<bool
 	}
 
 	return true;
+};
+
+export const getAvailableModels = async (): Promise<AvailableModels | null> => {
+	const response = await fetch(apiUrl('/settings/models'), {
+		credentials: 'include'
+	});
+	if (!response.ok) {
+		notify.error((await response.json()).detail);
+		return null;
+	}
+	return await response.json();
 };
