@@ -8,8 +8,10 @@ import type {
 	Translated,
 	TranslationsPublic,
 	UpdatePassword,
+	UpdateUser,
 	UserLogin,
-	UserPublic
+	UserPublic,
+	UserUpdate
 } from './types';
 import { apiUrl } from './utils';
 import { notify } from '$lib/state/notify.svelte';
@@ -138,4 +140,18 @@ export const updatePasswordMe = async (updatePassword: UpdatePassword): Promise<
 		return false;
 	}
 	return true;
+};
+
+export const updateUserMe = async (updateUser: UserUpdate): Promise<UserPublic | null> => {
+	const response = await fetch(apiUrl('/users/me'), {
+		method: 'PATCH',
+		headers: { 'content-type': 'application/json' },
+		credentials: 'include',
+		body: JSON.stringify(updateUser)
+	});
+	if (!response.ok) {
+		notify.error((await response.json()).detail);
+		return null;
+	}
+	return await response.json();
 };
