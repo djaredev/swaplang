@@ -74,10 +74,15 @@ export const getTranslations = async (
 	return await response.json();
 };
 
-export const getAvailableLanguages = async (): Promise<Language[] | null> => {
-	const response = await fetch(apiUrl('/settings/languages'), {
-		credentials: 'include'
-	});
+export const getAvailableLanguages = async (
+	onlyEnabled: boolean = false
+): Promise<Language[] | null> => {
+	const response = await fetch(
+		apiUrl('/settings/languages', { only_enabled: onlyEnabled.toString() }),
+		{
+			credentials: 'include'
+		}
+	);
 
 	if (!response.ok) {
 		notify.error((await response.json()).detail);
