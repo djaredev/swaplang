@@ -37,7 +37,7 @@
 	});
 </script>
 
-<form {onsubmit} class="lang-select">
+<form {onsubmit} class="form">
 	<div class="header">
 		<h1>Available languages</h1>
 		<SearchBar id="search" placeholder="Search language..." />
@@ -69,7 +69,20 @@
 	</div>
 </form>
 
-
+<form class="form">
+	<div class="header">
+		<h1>Current Model</h1>
+	</div>
+	<select class="select-model" disabled>
+		<option value="model-1">Model 1</option>
+	</select>
+	<div class="footer">
+		<div class="summary" id="summary">1 Modal available</div>
+		<div>
+			<button id="save" class="primary" disabled>Save</button>
+		</div>
+	</div>
+</form>
 
 
 <style>
@@ -77,7 +90,7 @@
 		box-sizing: border-box;
 	}
 
-	.lang-select {
+	.form {
 		width: 100%;
 		max-width: 900px;
 		background: inherit;
@@ -184,5 +197,27 @@
 		border: none;
 		color: #020617;
 		font-weight: 600;
+	}
+
+	.select-model {
+		width: 100%;
+		height: 45px;
+		background: white;
+		border-radius: 8px;
+		border: 1px solid #c2cad3;
+		outline: none;
+		color: #3c4043;
+		/* font-size: 16px; */
+		padding: 10px;
+	}
+	.select-model:disabled {
+		background: #f1f3f4;
+		color: #a8a8a8;
+		cursor: not-allowed;
+	}
+
+	button:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
 	}
 </style>
