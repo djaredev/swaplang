@@ -58,3 +58,7 @@ export type LanguageUpdate = {
 export type AvailableModels = {
 	models: string[];
 };
+
+export type SystemPrompt = {
+	system_prompt: string;
+};
