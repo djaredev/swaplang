@@ -20,8 +20,6 @@
 		langs = langs.map((lang) => ({ ...lang, enabled: false }));
 	};
 
-	const onsubmit = handler(async () => {});
-
 	const onsubmit = handler(async () => {
 		console.log('Submmitted');
 		if (await updateLanguages(langs.map((lang) => ({ id: lang.id, enabled: lang.enabled })))) {
@@ -96,7 +94,7 @@
 		background: inherit;
 		border: 1px solid #c2cad3;
 		border-radius: 16px;
-		padding: 1.5rem 1.75rem 2rem;
+		padding: 1.5rem 1.75rem 1.5rem;
 	}
 
 	.header {
