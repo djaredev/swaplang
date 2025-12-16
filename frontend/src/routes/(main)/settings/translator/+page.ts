@@ -1,10 +1,11 @@
 import type { PageLoad } from './$types';
 import { auth } from '$lib/utils/auth.svelte';
-import { getAvailableLanguages } from '$lib/sdk/sdk';
+import { getAvailableLanguages, getAvailableModels } from '$lib/sdk/sdk';
 
 export const load: PageLoad = async () => {
 	await auth();
 	const availablelanguages = await getAvailableLanguages();
+	const availableModels = await getAvailableModels();
 	console.log(availablelanguages);
-	return { availablelanguages };
+	return { availablelanguages, availableModels };
 };
