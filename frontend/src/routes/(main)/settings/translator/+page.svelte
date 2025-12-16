@@ -39,7 +39,7 @@
 	<div class="header">
 		<h1>Available languages</h1>
 		<SearchBar id="search" placeholder="Search language..." />
-		<button id="toggle" onclick={toggleLangView}
+		<button id="toggle" onclick={toggleLangView} type="button"
 			>{showSelectedOnly ? 'Show all' : 'Show enabled'}</button
 		>
 	</div>
@@ -61,7 +61,7 @@
 			{langs.filter((x) => x.enabled).length} Enabled languages
 		</div>
 		<div>
-			<button id="clear" onclick={clearSelection}>Clear</button>
+			<button id="clear" type="button" onclick={clearSelection}>Clear</button>
 			<button id="save" class="primary">Save</button>
 		</div>
 	</div>
