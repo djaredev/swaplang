@@ -17,5 +17,8 @@ class Settings(BaseSettings):
     def DATABASE_URL(self) -> str:
         return f"{self.DB_DIALECT}{self.DB_DRIVER}:///swaplang.db"
 
+    DEFAULT_MODEL: str = "gemma-3-1b-it-Q8_0.gguf"
+    DEFAULT_SYSTEM_PROMPT: str = ""
+
 
 settings = Settings()  # type: ignore

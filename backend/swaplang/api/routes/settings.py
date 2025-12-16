@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 
 from swaplang.auth.user import AuthUserDep
+from swaplang.config import settings
 from swaplang.database.database import SessionDep
 from swaplang.models.language import LanguageUpdate
 from swaplang.services import settings_service
@@ -25,3 +26,9 @@ async def update_enabled_languages(
         )
     settings_service.update_enabled_languages(session, languages)
     return {"status": "enabled languages updated"}
+
+
+@router.get("/models")
+async def get_available_models():
+    # For now, we only have one model available
+    return {"models": [settings.DEFAULT_MODEL]}
