@@ -72,7 +72,13 @@
 		<h1>Current Model</h1>
 	</div>
 	<select class="select-model" disabled>
-		<option value="model-1">Model 1</option>
+		{#if data.availableModels}
+			{#each data.availableModels.models as model (model)}
+				<option>{model}</option>
+			{/each}
+		{:else}
+			<option>No models available</option>
+		{/if}
 	</select>
 	<div class="footer">
 		<div class="summary" id="summary">1 Modal available</div>
