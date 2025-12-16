@@ -54,3 +54,7 @@ export type LanguageUpdate = {
 	id: string;
 	enabled: boolean;
 };
+
+export type AvailableModels = {
+	models: string[];
+};
