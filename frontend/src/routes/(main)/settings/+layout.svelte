@@ -142,6 +142,7 @@
 			.settings-view {
 				display: flex;
 				flex-direction: column;
+				gap: 30px;
 				flex: 1;
 				background: inherit;
 				padding: 10px;
