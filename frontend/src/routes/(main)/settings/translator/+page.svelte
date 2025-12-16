@@ -69,37 +69,10 @@
 	</div>
 </form>
 
+
+
+
 <style>
-	.profile {
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-		border: 1px solid #e8eaed;
-		border-radius: 8px;
-		padding: 20px;
-		/* background: white; */
-
-		.label {
-			color: inherit;
-			text-align: left;
-			padding: 2px;
-		}
-
-		:global(.button) {
-			align-self: end;
-		}
-	}
-
-	:root {
-		--bg: #0f172a;
-		--panel: #020617;
-		--border: #1e293b;
-		--primary: #38bdf8;
-		--primary-soft: #0ea5e9;
-		--text: #e5e7eb;
-		--muted: #94a3b8;
-	}
-
 	* {
 		box-sizing: border-box;
 	}
@@ -193,7 +166,7 @@
 
 	.summary {
 		font-size: 0.9rem;
-		color: var(--muted);
+		color: #94a3b8;
 	}
 
 	button {
