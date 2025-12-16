@@ -2,7 +2,7 @@ from fastapi import HTTPException
 from sqlmodel import Session, select
 from swaplang.auth.password import get_password_hash, verify_password
 from swaplang.config import settings
-from swaplang.models import User, UpdatePassword
+from swaplang.models import User, UpdatePassword, UserUpdate
 
 
 def create_superuser(session: Session):
@@ -39,6 +39,28 @@ def update_password(user: User, passwords: UpdatePassword, session: Session):
             detail="New password must be different from the current one.",
         )
     user.hashed_password = get_password_hash(passwords.new_password)
+    session.add(user)
+    session.commit()
+    session.refresh(user)
+    return user
+
+
+def update_user(user: User, user_update: UserUpdate, session: Session):
+    if user_update.username and user_update.username != user.username:
+        existing_user = get_user_by_username(user_update.username, session)
+        if existing_user:
+            raise HTTPException(
+                status_code=409, detail="This username is already in use"
+            )
+
+    if user_update.email and user_update.email != user.email:
+        existing_user = get_user_by_email(user_update.email, session)
+        if existing_user:
+            raise HTTPException(
+                status_code=409, detail="This email is already registered"
+            )
+
+    user.sqlmodel_update(user_update.model_dump(exclude_unset=True))
     session.add(user)
     session.commit()
     session.refresh(user)
