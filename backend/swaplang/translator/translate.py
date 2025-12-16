@@ -1,4 +1,5 @@
 from llama_cpp import CreateChatCompletionResponse
+from swaplang.config import settings
 from swaplang.translator.model import get_model
 
 SYSTEM_PROMPT = """\
@@ -53,6 +54,8 @@ Return an empty response (nothing) if:
 
 Your response must contain ONLY the translation or nothing at all.\
 """
+
+settings.DEFAULT_SYSTEM_PROMPT = SYSTEM_PROMPT
 
 
 def translate(text: str, source_language, target_language):
