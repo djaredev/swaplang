@@ -7,6 +7,7 @@ import type {
 	Translate,
 	Translated,
 	TranslationsPublic,
+	UpdatePassword,
 	UserLogin,
 	UserPublic
 } from './types';
@@ -120,4 +121,21 @@ export const getSystemPrompt = async (): Promise<SystemPrompt | null> => {
 		return null;
 	}
 	return await response.json();
+};
+
+export const updatePasswordMe = async (updatePassword: UpdatePassword): Promise<boolean> => {
+	console.log(JSON.stringify(updatePassword));
+	const response = await fetch(apiUrl('/users/me/password'), {
+		method: 'PATCH',
+		headers: { 'content-type': 'application/json' },
+		credentials: 'include',
+		body: JSON.stringify(updatePassword)
+	});
+	console.log('fetch');
+	if (!response.ok) {
+		notify.error((await response.json()).detail);
+		console.log('Error');
+		return false;
+	}
+	return true;
 };
