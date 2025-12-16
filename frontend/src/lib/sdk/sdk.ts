@@ -3,6 +3,7 @@ import type {
 	GetTranslation,
 	Language,
 	LanguageUpdate,
+	SystemPrompt,
 	Translate,
 	Translated,
 	TranslationsPublic,
@@ -101,6 +102,17 @@ export const updateLanguages = async (languages: LanguageUpdate[]): Promise<bool
 
 export const getAvailableModels = async (): Promise<AvailableModels | null> => {
 	const response = await fetch(apiUrl('/settings/models'), {
+		credentials: 'include'
+	});
+	if (!response.ok) {
+		notify.error((await response.json()).detail);
+		return null;
+	}
+	return await response.json();
+};
+
+export const getSystemPrompt = async (): Promise<SystemPrompt | null> => {
+	const response = await fetch(apiUrl('/settings/system_prompt'), {
 		credentials: 'include'
 	});
 	if (!response.ok) {
