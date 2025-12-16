@@ -62,3 +62,8 @@ export type AvailableModels = {
 export type SystemPrompt = {
 	system_prompt: string;
 };
+
+export type UpdatePassword = {
+	current_password: string;
+	new_password: string;
+};
