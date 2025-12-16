@@ -32,3 +32,8 @@ async def update_enabled_languages(
 async def get_available_models():
     # For now, we only have one model available
     return {"models": [settings.DEFAULT_MODEL]}
+
+
+@router.get("/system_prompt")
+async def get_system_prompt():
+    return {"system_prompt": settings.DEFAULT_SYSTEM_PROMPT}
