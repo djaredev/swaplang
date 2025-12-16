@@ -1,21 +1,25 @@
 <script lang="ts">
 	import LangSelect from '$lib/components/LangSelect.svelte';
 	import { HistoryIcon } from 'lucide-svelte';
-	import { translate } from '$lib/sdk/sdk';
+	import { getAvailableLanguages, translate } from '$lib/sdk/sdk';
 
-	let langs = [
-		{ id: 'es', name: 'Spanish' },
-		{ id: 'en', name: 'English' },
-		{ id: 'fr', name: 'French' },
-		{ id: 'de', name: 'German' },
-		{ id: 'it', name: 'Italian' },
-		{ id: 'pt', name: 'Portuguese' },
-		{ id: 'ru', name: 'Russian' },
-		{ id: 'ja', name: 'Japanese' },
-		{ id: 'ko', name: 'Korean' },
-		{ id: 'ar', name: 'Arabic' },
-		{ id: 'hi', name: 'Hindi' }
-	];
+	// let langs = [
+	// 	{ id: 'es', name: 'Spanish' },
+	// 	{ id: 'en', name: 'English' },
+	// 	{ id: 'fr', name: 'French' },
+	// 	{ id: 'de', name: 'German' },
+	// 	{ id: 'it', name: 'Italian' },
+	// 	{ id: 'pt', name: 'Portuguese' },
+	// 	{ id: 'ru', name: 'Russian' },
+	// 	{ id: 'ja', name: 'Japanese' },
+	// 	{ id: 'ko', name: 'Korean' },
+	// 	{ id: 'ar', name: 'Arabic' },
+	// 	{ id: 'hi', name: 'Hindi' }
+	// ];
+
+	let { data } = $props();
+
+	let langs = data.langs;
 
 	let typingTime: NodeJS.Timeout;
 	let input: HTMLDivElement;
