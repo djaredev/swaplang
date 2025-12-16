@@ -11,8 +11,10 @@ router = APIRouter(prefix="/settings", tags=["settings"])
 
 
 @router.get("/languages")
-async def get_available_languages(user: AuthUserDep, session: SessionDep):
-    return settings_service.get_available_languages(session)
+async def get_available_languages(
+    user: AuthUserDep, session: SessionDep, only_enabled: bool = False
+):
+    return settings_service.get_available_languages(session, only_enabled)
 
 
 @router.put("/languages")
