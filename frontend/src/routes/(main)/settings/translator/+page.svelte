@@ -82,6 +82,19 @@
 	</div>
 </form>
 
+<form class="form">
+	<div class="header">
+		<h1>System prompt</h1>
+	</div>
+	<div contenteditable="plaintext-only" class="system-prompt">You are a helpful assistant.</div>
+	<div class="footer">
+		<div class="summary" id="summary">Default prompt</div>
+		<div>
+			<button id="reset">Reset</button>
+			<button id="save" class="primary">Save</button>
+		</div>
+	</div>
+</form>
 
 <style>
 	* {
@@ -197,7 +210,8 @@
 		font-weight: 600;
 	}
 
-	.select-model {
+	.select-model,
+	.system-prompt {
 		width: 100%;
 		height: 45px;
 		background: white;
@@ -208,6 +222,15 @@
 		/* font-size: 16px; */
 		padding: 10px;
 	}
+
+	.system-prompt {
+		min-height: 150px;
+		height: auto;
+		max-height: 500px;
+		overflow-y: auto;
+		padding: 10px;
+	}
+
 	.select-model:disabled {
 		background: #f1f3f4;
 		color: #a8a8a8;
