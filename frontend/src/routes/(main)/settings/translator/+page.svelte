@@ -92,12 +92,14 @@
 	<div class="header">
 		<h1>System prompt</h1>
 	</div>
-	<div contenteditable="plaintext-only" class="system-prompt">You are a helpful assistant.</div>
+	<div contenteditable="false" class="system-prompt">
+		{data.systemPrompt ? data.systemPrompt.system_prompt : 'No system prompt set'}
+	</div>
 	<div class="footer">
 		<div class="summary" id="summary">Default prompt</div>
 		<div>
-			<button id="reset">Reset</button>
-			<button id="save" class="primary">Save</button>
+			<button id="reset" disabled>Reset</button>
+			<button id="save" class="primary" disabled>Save</button>
 		</div>
 	</div>
 </form>
@@ -235,6 +237,9 @@
 		max-height: 500px;
 		overflow-y: auto;
 		padding: 10px;
+		white-space: pre-wrap;
+		background: #f1f3f4;
+		color: #a8a8a8;
 	}
 
 	.select-model:disabled {
