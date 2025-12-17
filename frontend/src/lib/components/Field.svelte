@@ -14,7 +14,7 @@
 		background: white;
 		color: #cdd6f4;
 		border-radius: 8px;
-		border: 1px solid #e8eaed;
+		border: 1px solid #c2cad3;
 		outline: none;
 		color: #3c4043;
 		font-size: 16px;
