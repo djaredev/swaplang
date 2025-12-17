@@ -1,20 +1,49 @@
 <script lang="ts">
 	import type { Translation } from '$lib/sdk/types';
-	import { onMount } from 'svelte';
+	import { fade, scale } from 'svelte/transition';
 
 	let { translation }: { translation: Translation } = $props();
+
+	let isOpen = $state(false);
+
+	const openModal = () => {
+		isOpen = true;
+	};
+
+	const closeModal = () => {
+		isOpen = false;
+	};
 </script>
 
-<div class="translation-container">
+<div class="translation-container" onclick={openModal}>
 	<div class="langs">
 		<div class="source-lang">{translation.source_lang}</div>
 		<div class="target-lang">{translation.target_lang}</div>
 	</div>
 	<div class="translation">
-		<div class="source-text">{translation.source_text}</div>
-		<div class="target-text">{translation.target_text}</div>
+		<div class="source-text truncate-text">{translation.source_text}</div>
+		<div class="target-text truncate-text">{translation.target_text}</div>
 	</div>
 </div>
+
+{#if isOpen}
+	<div transition:fade={{ duration: 200 }} class="modal-overlay" onclick={closeModal}>
+		<div
+			transition:scale={{ duration: 200 }}
+			class="translation-container"
+			onclick={(e) => e.stopPropagation()}
+		>
+			<div class="langs">
+				<div class="source-lang">{translation.source_lang}</div>
+				<div class="target-lang">{translation.target_lang}</div>
+			</div>
+			<div class="translation">
+				<div class="source-text">{translation.source_text}</div>
+				<div class="target-text">{translation.target_text}</div>
+			</div>
+		</div>
+	</div>
+{/if}
 
 <style>
 	* {
@@ -41,14 +70,15 @@
 	.source-text {
 		border-right: 1px solid #c2cad3;
 		padding-right: 18px;
+		flex: 1;
 	}
 
 	.target-text {
 		padding-left: 18px;
+		flex: 1;
 	}
 
-	.source-text,
-	.target-text {
+	.truncate-text {
 		flex: 1;
 		display: -webkit-box;
 		-webkit-line-clamp: 8;
@@ -91,7 +121,7 @@
 		text-align: center;
 	}
 
-	@media (width < 1000px) {
+	@media (width < 1040px) {
 		.translation-container {
 			width: 100%;
 			flex-direction: row;
@@ -129,6 +159,25 @@
 			padding-left: unset;
 			margin-top: 18px;
 			padding-top: 18px;
+		}
+	}
+
+	.modal-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.6);
+		backdrop-filter: blur(4px);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 1000;
+
+		.target-text::after,
+		.source-text::after {
+			background: unset;
 		}
 	}
 </style>
