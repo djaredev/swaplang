@@ -18,3 +18,14 @@ export const logout = () => {
 	userState.clear();
 	goto('/login');
 };
+
+export async function loginAuth() {
+	if (!userState.username) {
+		const res = await whoami();
+		if (res) userState.set(res);
+	}
+
+	if (userState.username) {
+		redirect(302, '/');
+	}
+}
