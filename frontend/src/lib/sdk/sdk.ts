@@ -8,13 +8,14 @@ import type {
 	Translated,
 	TranslationsPublic,
 	UpdatePassword,
-	UpdateUser,
 	UserLogin,
 	UserPublic,
 	UserUpdate
 } from './types';
 import { apiUrl } from './utils';
 import { notify } from '$lib/state/notify.svelte';
+import { logout as logoutApp } from '$lib/utils/auth.svelte';
+import { handleError } from './interceptors';
 
 export const login = async (userLogin: UserLogin): Promise<Response> => {
 	const response = await fetch(apiUrl('/login'), {
@@ -52,7 +53,7 @@ export const translate = async (data: Translate): Promise<Translated | null> => 
 	});
 
 	if (!response.ok) {
-		notify.error((await response.json()).detail);
+		handleError(response);
 		return null;
 	}
 
@@ -67,7 +68,7 @@ export const getTranslations = async (
 	});
 
 	if (!response.ok) {
-		notify.error((await response.json()).detail);
+		handleError(response);
 		return null;
 	}
 
@@ -85,7 +86,7 @@ export const getAvailableLanguages = async (
 	);
 
 	if (!response.ok) {
-		notify.error((await response.json()).detail);
+		handleError(response);
 		return null;
 	}
 
@@ -101,7 +102,7 @@ export const updateLanguages = async (languages: LanguageUpdate[]): Promise<bool
 	});
 
 	if (!response.ok) {
-		notify.error((await response.json()).detail);
+		handleError(response);
 		return false;
 	}
 
@@ -113,7 +114,7 @@ export const getAvailableModels = async (): Promise<AvailableModels | null> => {
 		credentials: 'include'
 	});
 	if (!response.ok) {
-		notify.error((await response.json()).detail);
+		handleError(response);
 		return null;
 	}
 	return await response.json();
@@ -124,7 +125,7 @@ export const getSystemPrompt = async (): Promise<SystemPrompt | null> => {
 		credentials: 'include'
 	});
 	if (!response.ok) {
-		notify.error((await response.json()).detail);
+		handleError(response);
 		return null;
 	}
 	return await response.json();
@@ -140,7 +141,7 @@ export const updatePasswordMe = async (updatePassword: UpdatePassword): Promise<
 	});
 	console.log('fetch');
 	if (!response.ok) {
-		notify.error((await response.json()).detail);
+		handleError(response);
 		console.log('Error');
 		return false;
 	}
@@ -155,7 +156,7 @@ export const updateUserMe = async (updateUser: UserUpdate): Promise<UserPublic |
 		body: JSON.stringify(updateUser)
 	});
 	if (!response.ok) {
-		notify.error((await response.json()).detail);
+		handleError(response);
 		return null;
 	}
 	return await response.json();
