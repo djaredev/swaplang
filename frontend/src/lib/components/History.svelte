@@ -7,27 +7,17 @@
 	import { tick } from 'svelte';
 	import handler from '$lib/utils/handler';
 
-	const translation: Trans = {
-		id: 'f5f4430d-b098-4413-b07a-adb234be2e09',
-		source_lang: 'es',
-		target_lang: 'en',
-		source_text:
-			'Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum alias veniam itaque non esse ex ducimus necessitatibus, quam, ut maiores illo sit sint reiciendis voluptate hic eum. Illo, magnam aliquam Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum alias veniam itaque non esse ex ducimus necessitatibus, quam, ut maiores illo sit sint reiciendis voluptate hic eum. Illo, magnam aliquam',
-		target_text:
-			'Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum alias veniam itaque non esse ex ducimus necessitatibus, quam, ut maiores illo sit sint reiciendis voluptate hic eum. Illo, magnam aliquam Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum alias veniam itaque non esse ex ducimus necessitatibus, quam, ut maiores illo sit sint reiciendis voluptate hic eum. Illo, magnam aliquam',
-		created_at: '2025-10-18T18:22:21.381602',
-		updated_at: ''
-	};
+	let { translations } = $props();
 
 	type TranslationsState = {
 		translations: Trans[];
 	};
 
-	const MAX_LOAD = 100;
+	const MAX_LOAD = 200;
 
 	let count = $state(false);
 
-	const translationState: TranslationsState = $state({ translations: [translation] });
+	const translationState: TranslationsState = $state(translations ? translations : []);
 
 	const loadMore = handler(async () => {
 		console.log('Load More content');
@@ -39,7 +29,7 @@
 			limit: 20
 		});
 		console.log(data);
-		if (data.translations && data.translations.length > 1) {
+		if (data?.translations && data.translations.length > 1) {
 			let newLength = translationState.translations.length + data.translations.length;
 			if (translationState.translations.length > MAX_LOAD) {
 				console.log('Eliminando: ', newLength - MAX_LOAD);
@@ -89,7 +79,8 @@
 		const cursor = createCursor(firstTranslation.id, firstTranslation.created_at);
 		const data = await getTranslations({
 			cursor: cursor,
-			direction: 'prev'
+			direction: 'prev',
+			limit: 20
 		});
 		console.log(data);
 		if (data && data.translations.length > 0) {
