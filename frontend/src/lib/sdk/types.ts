@@ -32,7 +32,7 @@ export type Translation = {
 };
 
 export type GetTranslation = {
-	cursor: string;
+	cursor?: string;
 	direction?: Direction;
 	limit?: number;
 };
