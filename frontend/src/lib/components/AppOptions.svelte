@@ -92,7 +92,7 @@
 		min-width: 200px;
 		background: inherit;
 		border-radius: 8px;
-		border: 1px solid #e8eaed;
+		border: 1px solid #c2cad3;
 		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
 		z-index: 1000;
 		opacity: 0;
