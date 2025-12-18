@@ -4,6 +4,7 @@
 	import type { Language } from '$lib/sdk/types';
 	import { updateLanguages } from '$lib/sdk/sdk';
 	import { notify } from '$lib/state/notify.svelte';
+	import { SvelteMap } from 'svelte/reactivity';
 
 	let { data } = $props();
 
@@ -11,6 +12,7 @@
 
 	let showSelectedOnly = $state(false);
 
+	let isEnabled = new SvelteMap<string, boolean>(langs.map((lang) => [lang.id, lang.enabled]));
 	const toggleLangView = () => {
 		showSelectedOnly = !showSelectedOnly;
 		console.log(showSelectedOnly);
@@ -22,12 +24,21 @@
 
 	const onsubmit = handler(async () => {
 		console.log('Submmitted');
-		if (await updateLanguages(langs.map((lang) => ({ id: lang.id, enabled: lang.enabled })))) {
+		if (
+			await updateLanguages(
+				langs.map((lang) => ({ id: lang.id, enabled: isEnabled.get(lang.id) || false }))
+			)
+		) {
+			snapshotEnLangs = $state.snapshot(enabledLanguages);
 			notify.success('Languages updated successfully');
 		} else {
 			notify.error('Failed to update languages');
 		}
 	});
+
+	const enabledLanguages = $derived(langs.filter((x) => isEnabled.get(x.id)));
+
+	let snapshotEnLangs = $state($state.snapshot(enabledLanguages));
 
 	$effect(() => {
 		langs;
@@ -48,7 +59,13 @@
 		{#each langs as lang (lang.id)}
 			{#if !showSelectedOnly || lang.enabled}
 				<label class="lang">
-					<input type="checkbox" value={lang.id} bind:checked={lang.enabled} />
+					<input
+						type="checkbox"
+						value={lang.id}
+						bind:checked={
+							() => isEnabled.get(lang.id), (v) => isEnabled.set(lang.id, v ? v : false)
+						}
+					/>
 					<div class="check">✔</div>
 					<span>{lang.name}</span>
 				</label>
@@ -58,11 +75,15 @@
 
 	<div class="footer">
 		<div class="summary" id="summary">
-			{langs.filter((x) => x.enabled).length} Enabled languages
+			{enabledLanguages.length} Enabled languages
 		</div>
 		<div>
 			<button id="clear" type="button" onclick={clearSelection}>Clear</button>
-			<button id="save" class="primary">Save</button>
+			{#if JSON.stringify(enabledLanguages) !== JSON.stringify(snapshotEnLangs)}
+				<button id="save" class="primary">Save</button>
+			{:else}
+				<button id="save" class="primary" disabled>Save</button>
+			{/if}
 		</div>
 	</div>
 </form>
