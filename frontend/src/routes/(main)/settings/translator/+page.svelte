@@ -18,7 +18,6 @@
 
 	const toggleLangView = () => {
 		showSelectedOnly = !showSelectedOnly;
-		console.log(showSelectedOnly);
 	};
 
 	const clearSelection = () => {
@@ -26,7 +25,6 @@
 	};
 
 	const onsubmit = handler(async () => {
-		console.log('Submmitted');
 		if (
 			await updateLanguages(
 				langs.map((lang) => ({ id: lang.id, enabled: isEnabled.get(lang.id) || false }))
@@ -52,11 +50,6 @@
 	const enabledLanguages = $derived(langs.filter((x) => isEnabled.get(x.id)));
 
 	let snapshotEnLangs = $state($state.snapshot(enabledLanguages));
-
-	$effect(() => {
-		langs;
-		console.log($state.snapshot(langs));
-	});
 </script>
 
 <form {onsubmit} class="form">
@@ -267,7 +260,6 @@
 		border: 1px solid #c2cad3;
 		outline: none;
 		color: #3c4043;
-		/* font-size: 16px; */
 		padding: 10px;
 	}
 
