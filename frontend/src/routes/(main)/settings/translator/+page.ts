@@ -7,6 +7,5 @@ export const load: PageLoad = async () => {
 	const availablelanguages = await getAvailableLanguages();
 	const availableModels = await getAvailableModels();
 	const systemPrompt = await getSystemPrompt();
-	console.log(availablelanguages);
 	return { availablelanguages, availableModels, systemPrompt };
 };

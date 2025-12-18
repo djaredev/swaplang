@@ -37,8 +37,6 @@
 			<div class="user-email">{userState.email}</div>
 		</div>
 		<div class="dropdown-content">
-			<!-- <button class="dropdown-item"> -->
-			<!-- </button> -->
 			<a href="/settings/account" class="dropdown-item" onclick={() => (isOpen = false)}>
 				<SettingsIcon class="dropdown-icon" />
 				<span>Settings</span>
@@ -72,7 +70,6 @@
 		align-items: center;
 		width: 50px;
 		height: 50px;
-		/* background: none; */
 		background: linear-gradient(135deg, #4285f4, #34a853);
 		border: none;
 		cursor: pointer;
@@ -82,7 +79,6 @@
 	.dropdown-trigger:hover {
 		border-radius: 10px;
 		background: linear-gradient(135deg, #357ae8, #2c8c47);
-		/* opacity: 0.5; */
 	}
 
 	.dropdown-menu {
@@ -117,7 +113,6 @@
 		gap: 0.75rem;
 		padding: 0.625rem 1rem;
 		color: inherit;
-		/* text-decoration: none; */
 		font-size: 0.875rem;
 		cursor: pointer;
 		transition: all 0.15s ease;

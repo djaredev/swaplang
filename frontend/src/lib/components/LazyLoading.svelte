@@ -28,7 +28,6 @@
 		/* position: absolute; */
 		width: 100px;
 		height: 200px;
-		/* visibility: hidden; */
-		background: red;
+		visibility: hidden;
 	}
 </style>
