@@ -76,7 +76,7 @@
 
 	<div id="grid" class="grid">
 		{#each langs as lang (lang.id)}
-			{#if !showSelectedOnly || lang.enabled}
+			{#if !showSelectedOnly || isEnabled.get(lang.id)}
 				<label class="lang">
 					<input
 						type="checkbox"
