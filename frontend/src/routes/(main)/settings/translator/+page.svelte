@@ -12,7 +12,10 @@
 
 	let showSelectedOnly = $state(false);
 
+	let query = $state('');
+
 	let isEnabled = new SvelteMap<string, boolean>(langs.map((lang) => [lang.id, lang.enabled]));
+
 	const toggleLangView = () => {
 		showSelectedOnly = !showSelectedOnly;
 		console.log(showSelectedOnly);
@@ -36,6 +39,12 @@
 		}
 	});
 
+	const search = async () => {
+		const q = query.toLowerCase();
+		if (data.availablelanguages)
+			langs = data.availablelanguages.filter((l) => l.name.toLowerCase().includes(q));
+	};
+
 	const enabledLanguages = $derived(langs.filter((x) => isEnabled.get(x.id)));
 
 	let snapshotEnLangs = $state($state.snapshot(enabledLanguages));
@@ -49,7 +58,7 @@
 <form {onsubmit} class="form">
 	<div class="header">
 		<h1>Available languages</h1>
-		<SearchBar id="search" placeholder="Search language..." />
+		<SearchBar id="search" placeholder="Search language..." bind:value={query} oninput={search} />
 		<button id="toggle" onclick={toggleLangView} type="button"
 			>{showSelectedOnly ? 'Show all' : 'Show enabled'}</button
 		>
