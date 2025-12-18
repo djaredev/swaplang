@@ -22,7 +22,7 @@
 	};
 
 	const clearSelection = () => {
-		langs = langs.map((lang) => ({ ...lang, enabled: false }));
+		isEnabled.clear();
 	};
 
 	const onsubmit = handler(async () => {
