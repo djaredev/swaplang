@@ -1,9 +1,11 @@
 <script lang="ts">
+	import type { Language } from '$lib/sdk/types';
+
 	let {
 		options,
 		value = $bindable(),
 		...restProps
-	}: { options: string[]; value: string } = $props();
+	}: { options: Language[]; value: string } = $props();
 </script>
 
 <select class="language-select" id="sourceLang" bind:value {...restProps}>
