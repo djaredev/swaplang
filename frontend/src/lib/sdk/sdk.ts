@@ -13,8 +13,6 @@ import type {
 	UserUpdate
 } from './types';
 import { apiUrl } from './utils';
-import { notify } from '$lib/state/notify.svelte';
-import { logout as logoutApp } from '$lib/utils/auth.svelte';
 import { handleError } from './interceptors';
 
 export const login = async (userLogin: UserLogin): Promise<Response> => {
@@ -132,17 +130,14 @@ export const getSystemPrompt = async (): Promise<SystemPrompt | null> => {
 };
 
 export const updatePasswordMe = async (updatePassword: UpdatePassword): Promise<boolean> => {
-	console.log(JSON.stringify(updatePassword));
 	const response = await fetch(apiUrl('/users/me/password'), {
 		method: 'PATCH',
 		headers: { 'content-type': 'application/json' },
 		credentials: 'include',
 		body: JSON.stringify(updatePassword)
 	});
-	console.log('fetch');
 	if (!response.ok) {
 		handleError(response);
-		console.log('Error');
 		return false;
 	}
 	return true;
