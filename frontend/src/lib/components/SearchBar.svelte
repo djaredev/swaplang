@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { SearchIcon, XIcon } from 'lucide-svelte';
 
-	let { value = $bindable(), ...restProps } = $props();
+	let { value = $bindable(), onClean, ...restProps } = $props();
 
 	const clean = () => {
 		value = '';
+		onClean?.();
 	};
 </script>
 

@@ -45,6 +45,10 @@
 			langs = data.availablelanguages.filter((l) => l.name.toLowerCase().includes(q));
 	};
 
+	const onClean = () => {
+		langs = data.availablelanguages ? data.availablelanguages : [];
+	};
+
 	const enabledLanguages = $derived(langs.filter((x) => isEnabled.get(x.id)));
 
 	let snapshotEnLangs = $state($state.snapshot(enabledLanguages));
@@ -58,7 +62,13 @@
 <form {onsubmit} class="form">
 	<div class="header">
 		<h1>Available languages</h1>
-		<SearchBar id="search" placeholder="Search language..." bind:value={query} oninput={search} />
+		<SearchBar
+			id="search"
+			placeholder="Search language..."
+			bind:value={query}
+			oninput={search}
+			{onClean}
+		/>
 		<button id="toggle" onclick={toggleLangView} type="button"
 			>{showSelectedOnly ? 'Show all' : 'Show enabled'}</button
 		>
