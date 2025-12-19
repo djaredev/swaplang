@@ -1,4 +1,5 @@
 from pydantic import BaseModel, model_serializer
+import json
 
 
 class MessageEvent(BaseModel):
@@ -17,7 +18,7 @@ class MessageEvent(BaseModel):
         if self.retry is not None:
             parts.append(f"retry: {self.retry}")
         if isinstance(self.data, dict):
-            parts.append(str(self.data))
+            parts.append(f"data: {json.dumps(self.data)}")
         else:
             for line in self.data.splitlines():
                 parts.append(f"data: {line}")
