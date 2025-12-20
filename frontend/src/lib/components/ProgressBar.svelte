@@ -1,9 +1,17 @@
 <script lang="ts">
+	import { Tween } from 'svelte/motion';
+	import { cubicOut } from 'svelte/easing';
+
 	let { progress = $bindable(0) } = $props();
+
+	const tween = Tween.of(() => progress, {
+		duration: 400,
+		easing: cubicOut
+	});
 </script>
 
 <div class="progress-bar">
-	<div class="progress-fill" style:width={`${progress}%`}></div>
+	<div class="progress-fill" style:transform={`translateX(${-100 + tween.current}%)`}></div>
 </div>
 
 <style>
@@ -19,10 +27,10 @@
 	}
 
 	.progress-fill {
+		width: 100%;
 		height: 100%;
 		background: linear-gradient(135deg, #4285f4, #34a853);
 		border-radius: 15px;
-		transition: width 0.3s ease;
 		position: relative;
 		overflow: hidden;
 	}
