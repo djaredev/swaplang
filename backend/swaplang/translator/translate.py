@@ -58,8 +58,8 @@ Your response must contain ONLY the translation or nothing at all.\
 settings.DEFAULT_SYSTEM_PROMPT = SYSTEM_PROMPT
 
 
-def translate(text: str, source_language, target_language):
-    llm = get_model()
+async def translate(text: str, source_language, target_language):
+    llm = await get_model()
     response: CreateChatCompletionResponse = llm.create_chat_completion(
         messages=[  # type: ignore
             {

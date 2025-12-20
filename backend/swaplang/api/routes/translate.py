@@ -37,7 +37,9 @@ async def swap_lang(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Language '{target_language}' not available",
         )
-    translation = translate(text=text, source_language=sl.name, target_language=tl.name)
+    translation = await translate(
+        text=text, source_language=sl.name, target_language=tl.name
+    )
     if not translation:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
