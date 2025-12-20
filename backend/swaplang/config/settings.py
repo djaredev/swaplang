@@ -1,5 +1,13 @@
-from pydantic import EmailStr, Field, SecretStr, computed_field
+from pathlib import Path
+from pydantic import DirectoryPath, EmailStr, Field, SecretStr, computed_field
 from pydantic_settings import BaseSettings
+
+
+def _mkdir(value: str | DirectoryPath) -> DirectoryPath:
+    path = Path(value)
+    path.mkdir(parents=True, exist_ok=True)
+    print(f"Created directory at: {path.resolve()}")
+    return path
 
 
 class Settings(BaseSettings):
