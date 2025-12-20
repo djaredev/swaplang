@@ -5,7 +5,8 @@ from swaplang.utils.events import TqdmToEvent
 import asyncio
 
 
-_llm = None
+_llm: Llama | None = None
+_model_lock = asyncio.Lock()
 
 
 def _download_model():
@@ -30,5 +31,9 @@ def _load_model() -> Llama:
 async def get_model() -> Llama:
     global _llm
     if _llm is None:
-        _llm = await asyncio.to_thread(_load_model)
+        async with (
+            _model_lock
+        ):  # Ensure only one coroutine can load the model at a time
+            if _llm is None:  # Double-checked locking
+                _llm = await asyncio.to_thread(_load_model)
     return _llm
