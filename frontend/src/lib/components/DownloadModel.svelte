@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { eventSource } from '$lib/sdk/sdk';
+	import { tick } from 'svelte';
 	import DownloadBar from './DownloadBar.svelte';
 
 	let { isDownloading = $bindable(false) } = $props();
@@ -13,21 +14,33 @@
 		total_time: 0
 	});
 
-	eventSource.onmessage = (event) => {
+	let downloadState = $state('');
+
+	eventSource.addEventListener('model_download_started', () => {
+		downloadState = 'Starting model download...';
+		isDownloading = true;
+	});
+
+	eventSource.addEventListener('model_download_progress', (event) => {
 		downloadEvent = JSON.parse(event.data);
-		isDownloading = downloadEvent.progress_percentage < 100;
-	};
-	let downloandState = $derived.by(() => {
-		if (downloadEvent.progress_percentage >= 100) {
-			return 'Downloaded model';
-		}
-		return 'Downloading model...';
+		downloadState = 'Downloading model...';
+	});
+
+	eventSource.addEventListener('model_download_completed', () => {
+		downloadState = 'Model downloaded';
+		tick().then(() => {
+			setTimeout(() => (isDownloading = false), 500);
+		});
+	});
+
+	eventSource.addEventListener('model_download_failed', () => {
+		downloadState = 'Model download failed';
 	});
 </script>
 
 {#if isDownloading}
 	<DownloadBar
-		bind:state={downloandState}
+		bind:state={downloadState}
 		bind:downloaded={downloadEvent.downloaded_bytes}
 		bind:total={downloadEvent.total_bytes}
 		bind:progress={downloadEvent.progress_percentage}
