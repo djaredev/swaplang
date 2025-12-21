@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { eventSource } from '$lib/sdk/sdk';
 	import DownloadBar from './DownloadBar.svelte';
 
 	let { isDownloading = $bindable(false) } = $props();
@@ -11,6 +12,11 @@
 		time_remaining: 0,
 		total_time: 0
 	});
+
+	eventSource.onmessage = (event) => {
+		downloadEvent = JSON.parse(event.data);
+		isDownloading = downloadEvent.progress_percentage < 100;
+	};
 	let downloandState = $derived.by(() => {
 		if (downloadEvent.progress_percentage >= 100) {
 			return 'Downloaded model';
