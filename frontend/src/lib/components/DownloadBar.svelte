@@ -22,7 +22,8 @@
 				{secondsToTimeFormat(Math.floor(ramainingTime))}
 			</div>
 		</span>
-		<span class="stat percentage">{`${Math.floor(progress)}%`}</span>
+		<span class="stat percentage">{progress < 100 ? `${Math.floor(progress)}%` : 'Completed!'}</span
+		>
 	</div>
 
 	<ProgressBar bind:progress />
