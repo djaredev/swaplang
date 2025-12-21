@@ -2,6 +2,7 @@
 	import LangSelect from '$lib/components/LangSelect.svelte';
 	import { HistoryIcon } from 'lucide-svelte';
 	import { translate } from '$lib/sdk/sdk';
+	import ModelDownload from '$lib/components/ModelDownload.svelte';
 
 	let { data } = $props();
 
@@ -14,6 +15,7 @@
 	let targetText = $state('');
 	let sourceLang = $state('es');
 	let targetLang = $state('en');
+	let isDownloading = $state(false);
 
 	const clearText = () => {
 		sourceText = '';
@@ -119,6 +121,9 @@
 			</div>
 
 			<div class="output-section">
+				<div>
+					<ModelDownload bind:isDownloading />
+				</div>
 				<div
 					class="text-output"
 					id="translatedText"
