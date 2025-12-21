@@ -8,19 +8,15 @@
 		progress = $bindable(0),
 		downloaded = $bindable(0),
 		total = $bindable(0),
-		rate = $bindable(0)
+		rate = $bindable(0),
+		state = $bindable('')
 	} = $props();
 </script>
 
 <div class="download-bar">
 	<div class="top-stats">
 		<span class="stat">
-			<div class="icon">
-				<TimerIcon size="14" />
-			</div>
-			<div class="label">
-				{secondsToTimeFormat(Math.floor(ramainingTime))}
-			</div>
+			<div class="label">{state}</div>
 		</span>
 		<span class="stat percentage">{progress < 100 ? `${Math.floor(progress)}%` : 'Completed!'}</span
 		>
@@ -29,6 +25,14 @@
 	<ProgressBar bind:progress />
 
 	<div class="bottom-stats">
+		<div class="stat" style="flex-grow: 1; display: flex; justify-content: start;">
+			<div class="icon">
+				<TimerIcon size="14" />
+			</div>
+			<div class="label">
+				{secondsToTimeFormat(Math.floor(ramainingTime))}
+			</div>
+		</div>
 		<span class="stat">
 			<div class="icon">
 				<DownloadIcon size="14" />
