@@ -156,3 +156,5 @@ export const updateUserMe = async (updateUser: UserUpdate): Promise<UserPublic |
 	}
 	return await response.json();
 };
+
+export const eventSource = new EventSource(apiUrl('/sse'));
