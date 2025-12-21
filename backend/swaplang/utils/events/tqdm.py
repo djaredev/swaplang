@@ -9,7 +9,7 @@ def emit(n, total, rate, elapsed, **kwargs):
     total = total or 1
     event.emit(
         MessageEvent(
-            # event="download_progress",
+            event="model_download_progress",
             data={
                 "downloaded_bytes": n,
                 "total_bytes": total,
