@@ -2,7 +2,10 @@ from llama_cpp import Llama
 from huggingface_hub import hf_hub_download
 from swaplang.config import settings
 from swaplang.utils.events import TqdmToEvent
+from swaplang.utils.events import event
 import asyncio
+
+from swaplang.utils.events.models import MessageEvent
 
 
 _llm: Llama | None = None
@@ -10,11 +13,22 @@ _model_lock = asyncio.Lock()
 
 
 def _download_model():
-    hf_hub_download(
-        repo_id=settings.HF_HUB_REPO_ID,
-        filename=settings.DEFAULT_MODEL,
-        local_dir=settings.MODELS_DIR,
-        tqdm_class=TqdmToEvent,
+    event.emit(
+        MessageEvent(event="model_download_started", data="Model download started")
+    )
+    try:
+        hf_hub_download(
+            repo_id=settings.HF_HUB_REPO_ID,
+            filename=settings.DEFAULT_MODEL,
+            local_dir=settings.MODELS_DIR,
+            tqdm_class=TqdmToEvent,
+        )
+    except:
+        event.emit(
+            MessageEvent(event="model_download_failed", data="Model download failed")
+        )
+    event.emit(
+        MessageEvent(event="model_download_completed", data="Model download completed")
     )
 
 
