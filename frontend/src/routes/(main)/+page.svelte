@@ -35,6 +35,7 @@
 		}
 		clearTimeout(typingTime);
 		typingTime = setTimeout(async () => {
+			targetText = '';
 			const data = await translate({
 				text: sourceText,
 				source_language: sourceLang,
