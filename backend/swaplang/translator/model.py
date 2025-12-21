@@ -1,3 +1,4 @@
+from fastapi import HTTPException, status
 from llama_cpp import Llama
 from huggingface_hub import hf_hub_download
 from swaplang.config import settings
@@ -26,6 +27,10 @@ def _download_model():
     except:
         event.emit(
             MessageEvent(event="model_download_failed", data="Model download failed")
+        )
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="An error occurred while downloading the model",
         )
     event.emit(
         MessageEvent(event="model_download_completed", data="Model download completed")
