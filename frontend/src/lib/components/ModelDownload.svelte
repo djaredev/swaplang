@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { eventSource } from '$lib/sdk/sdk';
 	import { tick } from 'svelte';
-	import DownloadBar from './DownloadBar.svelte';
+	import DownloadBar, { type Barstyle } from './DownloadBar.svelte';
 
 	let { isDownloading = $bindable(false) } = $props();
 
@@ -15,6 +15,8 @@
 	});
 
 	let downloadState = $state('');
+
+	let barStyle: Barstyle = $state('bar-downloading');
 
 	eventSource.addEventListener('model_download_started', () => {
 		downloadState = 'Starting model download...';
@@ -35,6 +37,7 @@
 
 	eventSource.addEventListener('model_download_failed', () => {
 		downloadState = 'Model download failed';
+		barStyle = 'bar-error';
 	});
 </script>
 
@@ -46,5 +49,6 @@
 		bind:progress={downloadEvent.progress_percentage}
 		bind:rate={downloadEvent.rate}
 		bind:ramainingTime={downloadEvent.time_remaining}
+		{barStyle}
 	/>
 {/if}
