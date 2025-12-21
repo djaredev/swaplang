@@ -3,26 +3,40 @@
 	import ProgressBar from './ProgressBar.svelte';
 	import { bytesToFormattedSize, secondsToTimeFormat } from '$lib/utils/formaters';
 
+	export type Barstyle = 'bar-downloading' | 'bar-error';
+
+	type Props = {
+		ramainingTime: number;
+		progress: number;
+		downloaded: number;
+		total: number;
+		rate: number;
+		state: string;
+		barStyle: Barstyle;
+	};
+
 	let {
 		ramainingTime = $bindable(0),
 		progress = $bindable(0),
 		downloaded = $bindable(0),
 		total = $bindable(0),
 		rate = $bindable(0),
-		state = $bindable('')
-	} = $props();
+		state = $bindable(''),
+		barStyle = 'bar-downloading'
+	}: Props = $props();
 </script>
 
 <div class="download-bar">
 	<div class="top-stats">
 		<span class="stat">
-			<div class="label">{state}</div>
+			<div class={['label', barStyle]}>{state}</div>
 		</span>
-		<span class="stat percentage">{progress < 100 ? `${Math.floor(progress)}%` : 'Completed!'}</span
+		<span class={['stat percentage', barStyle]}
+			>{progress < 100 ? `${Math.floor(progress)}%` : 'Completed!'}</span
 		>
 	</div>
 
-	<ProgressBar bind:progress />
+	<ProgressBar bind:progress color={barStyle} />
 
 	<div class="bottom-stats">
 		<div class="stat" style="flex-grow: 1; display: flex; justify-content: start;">
@@ -58,6 +72,25 @@
 </div>
 
 <style>
+	:global(.bar-error) {
+		color: #d41313;
+		background: linear-gradient(135deg, #c98510, #d41313);
+	}
+
+	:global(.bar-downloading) {
+		color: #34a853;
+		background: linear-gradient(135deg, #4285f4, #34a853);
+	}
+
+	.top-stats .bar-error,
+	.top-stats .bar-downloading {
+		background: inherit;
+	}
+
+	.label.bar-downloading {
+		color: #5f6368;
+	}
+
 	.top-stats {
 		display: flex;
 		justify-content: space-between;
@@ -93,6 +126,5 @@
 	.percentage {
 		font-weight: bold;
 		font-size: 16px;
-		color: #34a853;
 	}
 </style>
