@@ -3,6 +3,7 @@
 	import { HistoryIcon } from 'lucide-svelte';
 	import { translate } from '$lib/sdk/sdk';
 	import ModelDownload from '$lib/components/ModelDownload.svelte';
+	import TextSpinner from '$lib/components/TextSpinner.svelte';
 
 	let { data } = $props();
 
@@ -15,6 +16,7 @@
 	let targetText = $state('');
 	let sourceLang = $state('es');
 	let targetLang = $state('en');
+	let isTranslating = $state(false);
 	let isDownloading = $state(false);
 
 	const clearText = () => {
@@ -37,6 +39,7 @@
 		}
 		clearTimeout(typingTime);
 		typingTime = setTimeout(async () => {
+			isTranslating = true;
 			targetText = '';
 			const data = await translate({
 				text: sourceText,
@@ -44,6 +47,7 @@
 				target_language: targetLang
 			});
 			if (data) {
+				isTranslating = false;
 				targetText = data.text;
 			}
 		}, 3000);
@@ -124,6 +128,9 @@
 				<div>
 					<ModelDownload bind:isDownloading />
 				</div>
+				{#if isTranslating && !isDownloading}
+					<TextSpinner value="Translating" />
+				{/if}
 				<div
 					class="text-output"
 					id="translatedText"
