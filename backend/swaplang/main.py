@@ -2,10 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from swaplang.frontend import frontend
 from swaplang.config import settings
-from swaplang.database import init_db
 from swaplang.api import router
-
-init_db()
+from swaplang.scripts import prestart
+from swaplang.utils.logger import logger
 
 app = FastAPI(title=settings.API_NAME, openapi_url=None, docs_url=None, redoc_url=None)
 
@@ -21,3 +20,12 @@ if settings.ENVIRONMENT == "dev":
 
 app.include_router(router, prefix="/api")
 app.mount("/", frontend)
+
+
+def run_server():
+    import uvicorn
+
+    prestart()
+
+    logger.info("Starting server...")
+    uvicorn.run(app, host="0.0.0.0", port=settings.PORT)
