@@ -5,7 +5,7 @@
 
 	let { isDownloading = $bindable(false) } = $props();
 
-	let downloadEvent = $state({
+	let downloadStart = $state({
 		downloaded_bytes: 0,
 		total_bytes: 0,
 		progress_percentage: 0,
@@ -14,13 +14,17 @@
 		total_time: 0
 	});
 
+	let downloadEvent = $state(downloadStart);
+
 	let downloadState = $state('');
 
 	let barStyle: Barstyle = $state('bar-downloading');
 
 	eventSource.addEventListener('model_download_started', () => {
 		downloadState = 'Starting model download...';
+		barStyle = 'bar-downloading';
 		isDownloading = true;
+		downloadEvent = downloadStart;
 	});
 
 	eventSource.addEventListener('model_download_progress', (event) => {

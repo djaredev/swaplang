@@ -44,7 +44,7 @@
 				<TimerIcon size="14" />
 			</div>
 			<div class="label">
-				{secondsToTimeFormat(Math.floor(ramainingTime))}
+				{barStyle == 'bar-downloading' ? secondsToTimeFormat(Math.floor(ramainingTime)) : '--:--'}
 			</div>
 		</div>
 		<span class="stat">
@@ -65,7 +65,7 @@
 				<ArrowDownUpIcon size="14" />
 			</div>
 			<div class="label">
-				{bytesToFormattedSize(Math.ceil(rate))}/s
+				{barStyle == 'bar-downloading' ? bytesToFormattedSize(Math.ceil(rate)) : '0 MB/s'}/s
 			</div>
 		</span>
 	</div>

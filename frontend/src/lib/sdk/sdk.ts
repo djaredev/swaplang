@@ -14,6 +14,7 @@ import type {
 } from './types';
 import { apiUrl } from './utils';
 import { handleError } from './interceptors';
+import { notify } from '$lib/state/notify.svelte';
 
 export const login = async (userLogin: UserLogin): Promise<Response> => {
 	const response = await fetch(apiUrl('/login'), {
@@ -45,17 +46,24 @@ export const whoami = async (): Promise<UserPublic | null> => {
 };
 
 export const translate = async (data: Translate): Promise<Translated | null> => {
-	const response = await fetch(apiUrl('/translate', data), {
-		method: 'POST',
-		credentials: 'include'
-	});
+	try {
+		const response = await fetch(apiUrl('/translate', data), {
+			method: 'POST',
+			credentials: 'include'
+		});
 
-	if (!response.ok) {
-		handleError(response);
+		console.log(response);
+
+		if (!response.ok) {
+			handleError(response);
+			return null;
+		}
+
+		return await response.json();
+	} catch {
+		notify.error('Something went wrong while translating. Please try again.');
 		return null;
 	}
-
-	return await response.json();
 };
 
 export const getTranslations = async (

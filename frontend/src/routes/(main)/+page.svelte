@@ -23,6 +23,8 @@
 		sourceText = '';
 		targetText = '';
 		clearTimeout(typingTime);
+		isDownloading = false;
+		isTranslating = false;
 	};
 
 	const swapLang = () => {
@@ -40,6 +42,7 @@
 		clearTimeout(typingTime);
 		typingTime = setTimeout(async () => {
 			isTranslating = true;
+			isDownloading = false;
 			targetText = '';
 			const data = await translate({
 				text: sourceText,
@@ -125,9 +128,11 @@
 			</div>
 
 			<div class="output-section">
-				<div>
-					<ModelDownload bind:isDownloading />
-				</div>
+				{#if isTranslating}
+					<div>
+						<ModelDownload bind:isDownloading />
+					</div>
+				{/if}
 				{#if isTranslating && !isDownloading}
 					<TextSpinner value="Translating" />
 				{/if}

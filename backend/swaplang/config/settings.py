@@ -11,6 +11,17 @@ def _mkdir(value: str | DirectoryPath) -> DirectoryPath:
 
 
 class Settings(BaseSettings):
+    ENVIRONMENT: str = "dev"
+    API: str = "/api"
+    API_NAME: str = "Swaplang API"
+
+    @computed_field
+    @property
+    def PORT(self) -> int:
+        if self.ENVIRONMENT == "dev":
+            return 8000
+        return 1717
+
     DB_DIALECT: str = "sqlite"
     DB_DRIVER: str = ""
     SUPERUSER_USERNAME: str = Field(min_length=2, max_length=255)
