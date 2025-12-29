@@ -38,7 +38,7 @@ class DataDir(BaseSettings):
     @computed_field
     @property
     def LOG_PATH(self) -> DirectoryPath:
-        return _mkdir(f"{self.DATA_DIR}/logs/") / "neonote.log"
+        return _mkdir(f"{self.DATA_DIR}/logs/") / "swaplang.log"
 
 
 _data_dir = DataDir()  # type: ignore
