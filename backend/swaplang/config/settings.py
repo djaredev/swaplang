@@ -1,6 +1,18 @@
+import logging
 from pathlib import Path
-from pydantic import DirectoryPath, EmailStr, Field, SecretStr, computed_field
+from typing import Annotated
+from pydantic import (
+    AfterValidator,
+    BeforeValidator,
+    DirectoryPath,
+    EmailStr,
+    Field,
+    SecretStr,
+    computed_field,
+)
 from pydantic_settings import BaseSettings
+
+from swaplang.config.logger_config import setup_logger
 
 
 def _mkdir(value: str | DirectoryPath) -> DirectoryPath:
@@ -10,7 +22,29 @@ def _mkdir(value: str | DirectoryPath) -> DirectoryPath:
     return path
 
 
-class Settings(BaseSettings):
+def _resolve_path(value: DirectoryPath) -> DirectoryPath:
+    return value.resolve()
+
+
+class DataDir(BaseSettings):
+    DATA_DIR: Annotated[
+        DirectoryPath, BeforeValidator(_mkdir), AfterValidator(_resolve_path)
+    ] = Path("data/")
+    LOG_LEVEL: str = "INFO"
+
+    @computed_field
+    @property
+    def LOG_PATH(self) -> DirectoryPath:
+        return _mkdir(f"{self.DATA_DIR}/logs/") / "neonote.log"
+
+
+_data_dir = DataDir()  # type: ignore
+
+setup_logger(log_level=_data_dir.LOG_LEVEL, log_path=_data_dir.LOG_PATH)
+logger = logging.getLogger("app")
+
+
+class Settings(DataDir):
     ENVIRONMENT: str = "dev"
     API: str = "/api"
     API_NAME: str = "Swaplang API"
@@ -37,7 +71,6 @@ class Settings(BaseSettings):
     def DATABASE_URL(self) -> str:
         return f"{self.DB_DIALECT}{self.DB_DRIVER}:///swaplang.db"
 
-    DATA_DIR: str = "data/"
     HF_HUB_REPO_ID: str = "ggml-org/gemma-3-1b-it-GGUF"
     DEFAULT_MODEL: str = "gemma-3-1b-it-Q8_0.gguf"
     DEFAULT_SYSTEM_PROMPT: str = ""
