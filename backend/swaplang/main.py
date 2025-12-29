@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from swaplang.frontend import frontend
 from swaplang.config import settings
 from swaplang.database import init_db
 from swaplang.api import router
@@ -19,3 +20,4 @@ if settings.ENVIRONMENT == "dev":
     )
 
 app.include_router(router, prefix="/api")
+app.mount("/", frontend)
