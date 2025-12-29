@@ -1,6 +1,7 @@
 import logging
 import secrets
 from pathlib import Path
+from importlib.resources import files
 from typing import Annotated
 from pydantic import (
     AfterValidator,
@@ -118,6 +119,20 @@ class Settings(DataDir):
             pass
             logger.exception("Error handling secret key from file.")
         return self
+
+    FRONTEND_DIR: Annotated[
+        DirectoryPath, BeforeValidator(_mkdir), AfterValidator(_resolve_path)
+    ] = files("swaplang") / "frontend"  # type: ignore
+
+    @computed_field
+    @property
+    def FRONTEND_INDEX_PATH(self) -> str:
+        return f"{self.FRONTEND_DIR}/index.html"
+
+    @computed_field
+    @property
+    def FRONTEND_STATIC_PATH(self) -> DirectoryPath:
+        return _mkdir(f"{self.FRONTEND_DIR}/static")
 
 
 settings = Settings()  # type: ignore
