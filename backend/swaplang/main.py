@@ -6,7 +6,12 @@ from swaplang.api import router
 from swaplang.scripts import prestart
 from swaplang.utils.logger import logger
 
-app = FastAPI(title=settings.API_NAME, openapi_url=None, docs_url=None, redoc_url=None)
+app = FastAPI(
+    title=settings.API_NAME,
+    openapi_url=settings.OPENAPI_URL,
+    docs_url=None,
+    redoc_url=None,
+)
 
 
 if settings.ENVIRONMENT == "dev":
