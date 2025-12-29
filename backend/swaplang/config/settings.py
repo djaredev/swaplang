@@ -61,6 +61,13 @@ class Settings(DataDir):
             return 8000
         return 1717
 
+    @computed_field
+    @property
+    def OPENAPI_URL(self) -> str | None:
+        if self.ENVIRONMENT != "dev":
+            return None
+        return f"{self.API}/openapi.json"
+
     DB_DIALECT: str = "sqlite"
     DB_DRIVER: str = ""
     SUPERUSER_USERNAME: str = Field(min_length=2, max_length=255)
