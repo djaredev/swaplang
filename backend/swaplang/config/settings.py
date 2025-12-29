@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     ENVIRONMENT: str = "dev"
     API: str = "/api"
     API_NAME: str = "Swaplang API"
+    ALLOWED_ORIGINS: str = "http://localhost:5173"
 
     @computed_field
     @property
