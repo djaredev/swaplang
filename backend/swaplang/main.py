@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from swaplang.config import settings
 from swaplang.database import init_db
 from swaplang.api import router
 
 init_db()
 
-app = FastAPI()
+app = FastAPI(title=settings.API_NAME, openapi_url=None, docs_url=None, redoc_url=None)
 
 
 app.add_middleware(
