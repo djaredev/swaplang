@@ -1,4 +1,5 @@
 import logging
+import secrets
 from pathlib import Path
 from typing import Annotated
 from pydantic import (
@@ -7,8 +8,10 @@ from pydantic import (
     DirectoryPath,
     EmailStr,
     Field,
+    FilePath,
     SecretStr,
     computed_field,
+    model_validator,
 )
 from pydantic_settings import BaseSettings
 
@@ -87,6 +90,35 @@ class Settings(DataDir):
     @property
     def MODEL_PATH(self) -> Path:
         return self.MODELS_DIR / self.DEFAULT_MODEL
+
+    SECRET_KEY: SecretStr = SecretStr("")
+
+    @computed_field
+    @property
+    def SECRET_KEY_FILE_PATH(self) -> FilePath:
+        secret_key_file_path = self.DATA_DIR / "secretkey.txt"
+        secret_key_file_path.touch(exist_ok=True)
+        return secret_key_file_path
+
+    @model_validator(mode="after")
+    def _create_secret_key(self):
+        if self.SECRET_KEY.get_secret_value():
+            logger.info("Secret key already exists.")
+            return self
+        try:
+            self.SECRET_KEY = SecretStr(self.SECRET_KEY_FILE_PATH.read_text("utf-8"))
+            logger.info("Reading secret key from file...")
+            if not self.SECRET_KEY.get_secret_value().strip():
+                logger.info("Secret key not found, generating new one...")
+                self.SECRET_KEY = SecretStr(secrets.token_hex(32))
+                self.SECRET_KEY_FILE_PATH.write_text(
+                    self.SECRET_KEY.get_secret_value(), "utf-8"
+                )
+                logger.info("New secret key generated and saved to file.")
+        except Exception:
+            pass
+            logger.exception("Error handling secret key from file.")
+        return self
 
 
 settings = Settings()  # type: ignore
