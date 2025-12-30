@@ -79,7 +79,7 @@ class Settings(DataDir):
     @computed_field
     @property
     def DATABASE_URL(self) -> str:
-        return f"{self.DB_DIALECT}{self.DB_DRIVER}:///swaplang.db"
+        return f"{self.DB_DIALECT}{self.DB_DRIVER}:////{self.DATA_DIR}/swaplang.db"
 
     HF_HUB_REPO_ID: str = "ggml-org/gemma-3-1b-it-GGUF"
     DEFAULT_MODEL: str = "gemma-3-1b-it-Q8_0.gguf"
