@@ -43,7 +43,7 @@ def _load_model() -> Llama:
     return Llama(
         model_path=str(settings.MODEL_PATH),
         n_gpu_layers=-1,
-        n_ctx=2048,
+        n_ctx=4096,
     )
 
 
