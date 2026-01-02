@@ -9,7 +9,7 @@ dependencies = [
     "email-validator>=2.3.0",
     "fastapi>=0.118.0",
     "huggingface-hub>=1.2.3",
-    "llama-cpp-python==0.3.16",
+    "llama-cpp-python>=0.3.2",
     "passlib>=1.7.4",
     "pydantic-settings>=2.11.0",
     "pyjwt>=2.10.1",
@@ -19,15 +19,39 @@ dependencies = [
     "uvloop>=0.21.0",
 ]
 
+[project.optional-dependencies]
+gpu = [
+  "llama-cpp-python==0.3.16",
+]
+cpu = [
+  "llama-cpp-python==0.3.2",
+]
+
+
+[tool.uv]
+conflicts = [
+  [
+    { extra = "gpu" },
+    { extra = "cpu" },
+  ],
+]
+
 [tool.uv.sources]
 llama-cpp-python = [
-    {index = "llama-cpp-python-cu124"}
+    {index = "llama-cpp-python-cu124", extra = "gpu"},
+    {index = "llama-cpp-python-cpu", extra = "cpu"},
 ]
 
 [[tool.uv.index]]
 name = "llama-cpp-python-cu124"
 url = "https://abetlen.github.io/llama-cpp-python/whl/cu124"
 explicit = true
+
+[[tool.uv.index]]
+name = "llama-cpp-python-cpu"
+url = "https://abetlen.github.io/llama-cpp-python/whl/cpu"
+explicit = true
+
 
 [dependency-groups]
 dev = [
