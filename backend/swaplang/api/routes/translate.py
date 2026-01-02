@@ -1,5 +1,6 @@
+from typing import Annotated
 from uuid import UUID
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, Query, status
 
 from swaplang.auth.user import AuthUserDep
 from swaplang.database import SessionDep
@@ -21,7 +22,7 @@ router = APIRouter()
 async def swap_lang(
     user: AuthUserDep,
     session: SessionDep,
-    text: str,
+    text: Annotated[str, Query(max_length=5000)],
     source_language: str,
     target_language: str,
 ):
