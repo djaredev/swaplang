@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Sequence
 from uuid import UUID
-from sqlmodel import Session, and_, col, or_, select
+from sqlmodel import Session, and_, col, delete, or_, select
 
 from swaplang.models import Translation, User, Direction, Cursor, TranslationUpdate
 from swaplang.utils.cursor import decode_cursor, encode_cursor
@@ -14,7 +14,21 @@ def create_translate(
     source_text: str,
     target_lang: str,
     target_text: str,
+    max_records=100,
 ):
+    records_to_delete = (
+        select(Translation.id)
+        .where(Translation.user_id == user.id)
+        .order_by(Translation.created_at.desc())  # type: ignore
+        .offset(max_records - 1)
+    )
+
+    stmt_delete = (
+        delete(Translation)
+        .where(Translation.user_id == user.id)  # type: ignore
+        .where(Translation.id.in_(records_to_delete))  # type: ignore
+    )
+    session.exec(stmt_delete)
     session.add(
         Translation(
             user_id=user.id,
