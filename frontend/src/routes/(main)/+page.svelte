@@ -4,6 +4,7 @@
 	import { translate } from '$lib/sdk/sdk';
 	import ModelDownload from '$lib/components/ModelDownload.svelte';
 	import TextSpinner from '$lib/components/TextSpinner.svelte';
+	import { tick } from 'svelte';
 
 	let { data } = $props();
 
@@ -11,6 +12,8 @@
 
 	let typingTime: NodeJS.Timeout;
 	let input: HTMLDivElement;
+
+	const MAX_LENGTH = 5000;
 
 	let sourceText = $state('');
 	let targetText = $state('');
@@ -76,10 +79,23 @@
 		}
 
 		// Cancel if the limit has already been reached
-		if (text.length >= 5000) {
+		if (text.length >= MAX_LENGTH) {
 			e.preventDefault();
 		}
 	};
+
+	function moveCursorToEnd(el: HTMLElement) {
+		if (!el) return;
+		el.focus();
+
+		const range = document.createRange();
+		range.selectNodeContents(el);
+		range.collapse(false); // false = to the end
+
+		const selection = window.getSelection();
+		selection?.removeAllRanges();
+		selection?.addRange(range);
+	}
 </script>
 
 <div class="content">
@@ -104,7 +120,22 @@
 						id="translatedText"
 						placeholder="Type here to translate"
 						contenteditable="plaintext-only"
-						bind:innerText={sourceText}
+						bind:innerText={
+							() => {
+								return sourceText;
+							},
+							(v: string) => {
+								// when the text is  pasted
+								if (v.length >= MAX_LENGTH) {
+									tick().then(() => {
+										moveCursorToEnd(input);
+									});
+									sourceText = v.slice(0, MAX_LENGTH);
+									return;
+								}
+								sourceText = v;
+							}
+						}
 						bind:this={input}
 						oninput={() => {
 							fixtInput();
