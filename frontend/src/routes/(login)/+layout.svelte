@@ -1,6 +1,4 @@
 <script>
-	import '../../app.css';
-
 	let { children } = $props();
 </script>
 
@@ -11,11 +9,6 @@
 </main>
 
 <style>
-	:global(html) {
-		height: 100%;
-		width: 100%;
-	}
-
 	.body {
 		display: flex;
 		height: 100%;
