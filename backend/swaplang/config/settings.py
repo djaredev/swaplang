@@ -84,6 +84,7 @@ class Settings(DataDir):
     HF_HUB_REPO_ID: str = "ggml-org/gemma-3-1b-it-GGUF"
     DEFAULT_MODEL: str = "gemma-3-1b-it-Q8_0.gguf"
     DEFAULT_SYSTEM_PROMPT: str = ""
+    GPU_SUPPORT: bool = True
 
     @computed_field
     @property

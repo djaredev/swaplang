@@ -42,7 +42,7 @@ def _load_model() -> Llama:
         _download_model()
     return Llama(
         model_path=str(settings.MODEL_PATH),
-        n_gpu_layers=-1,
+        n_gpu_layers=-1 if settings.GPU_SUPPORT else 0,
         n_ctx=4096,
     )
 
