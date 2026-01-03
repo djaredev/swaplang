@@ -362,30 +362,6 @@ wheels = [
 
 [[package]]
 name = "llama-cpp-python"
-version = "0.3.2"
-source = { registry = "https://abetlen.github.io/llama-cpp-python/whl/cpu" }
-dependencies = [
-    { name = "diskcache", marker = "extra == 'extra-8-swaplang-cpu'" },
-    { name = "jinja2", marker = "extra == 'extra-8-swaplang-cpu'" },
-    { name = "numpy", marker = "extra == 'extra-8-swaplang-cpu'" },
-    { name = "typing-extensions", marker = "extra == 'extra-8-swaplang-cpu'" },
-]
-wheels = [
-    { url = "https://github.com/abetlen/llama-cpp-python/releases/download/v0.3.2/llama_cpp_python-0.3.2-cp312-cp312-linux_aarch64.whl" },
-    { url = "https://github.com/abetlen/llama-cpp-python/releases/download/v0.3.2/llama_cpp_python-0.3.2-cp312-cp312-linux_i686.whl" },
-    { url = "https://github.com/abetlen/llama-cpp-python/releases/download/v0.3.2/llama_cpp_python-0.3.2-cp312-cp312-linux_x86_64.whl" },
-    { url = "https://github.com/abetlen/llama-cpp-python/releases/download/v0.3.2/llama_cpp_python-0.3.2-cp312-cp312-macosx_10_13_x86_64.whl" },
-    { url = "https://github.com/abetlen/llama-cpp-python/releases/download/v0.3.2/llama_cpp_python-0.3.2-cp312-cp312-win32.whl" },
-    { url = "https://github.com/abetlen/llama-cpp-python/releases/download/v0.3.2/llama_cpp_python-0.3.2-cp312-cp312-win_amd64.whl" },
-    { url = "https://github.com/abetlen/llama-cpp-python/releases/download/v0.3.2/llama_cpp_python-0.3.2-cp313-cp313-linux_i686.whl" },
-    { url = "https://github.com/abetlen/llama-cpp-python/releases/download/v0.3.2/llama_cpp_python-0.3.2-cp313-cp313-linux_x86_64.whl" },
-    { url = "https://github.com/abetlen/llama-cpp-python/releases/download/v0.3.2/llama_cpp_python-0.3.2-cp313-cp313-macosx_10_13_x86_64.whl" },
-    { url = "https://github.com/abetlen/llama-cpp-python/releases/download/v0.3.2/llama_cpp_python-0.3.2-cp313-cp313-win32.whl" },
-    { url = "https://github.com/abetlen/llama-cpp-python/releases/download/v0.3.2/llama_cpp_python-0.3.2-cp313-cp313-win_amd64.whl" },
-]
-
-[[package]]
-name = "llama-cpp-python"
 version = "0.3.16"
 source = { registry = "https://abetlen.github.io/llama-cpp-python/whl/cu124" }
 dependencies = [
@@ -403,10 +379,10 @@ name = "llama-cpp-python"
 version = "0.3.16"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "diskcache", marker = "(extra == 'extra-8-swaplang-cpu' and extra == 'extra-8-swaplang-gpu') or (extra != 'extra-8-swaplang-cpu' and extra != 'extra-8-swaplang-gpu')" },
-    { name = "jinja2", marker = "(extra == 'extra-8-swaplang-cpu' and extra == 'extra-8-swaplang-gpu') or (extra != 'extra-8-swaplang-cpu' and extra != 'extra-8-swaplang-gpu')" },
-    { name = "numpy", marker = "(extra == 'extra-8-swaplang-cpu' and extra == 'extra-8-swaplang-gpu') or (extra != 'extra-8-swaplang-cpu' and extra != 'extra-8-swaplang-gpu')" },
-    { name = "typing-extensions", marker = "(extra == 'extra-8-swaplang-cpu' and extra == 'extra-8-swaplang-gpu') or (extra != 'extra-8-swaplang-cpu' and extra != 'extra-8-swaplang-gpu')" },
+    { name = "diskcache" },
+    { name = "jinja2" },
+    { name = "numpy" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e4/b4/c8cd17629ced0b9644a71d399a91145aedef109c0333443bef015e45b704/llama_cpp_python-0.3.16.tar.gz", hash = "sha256:34ed0f9bd9431af045bb63d9324ae620ad0536653740e9bb163a2e1fcb973be6", size = 50688636, upload-time = "2025-08-15T04:58:29.212Z" }
 
@@ -837,9 +813,8 @@ dependencies = [
     { name = "email-validator" },
     { name = "fastapi" },
     { name = "huggingface-hub" },
-    { name = "llama-cpp-python", version = "0.3.2", source = { registry = "https://abetlen.github.io/llama-cpp-python/whl/cpu" }, marker = "extra == 'extra-8-swaplang-cpu'" },
     { name = "llama-cpp-python", version = "0.3.16", source = { registry = "https://abetlen.github.io/llama-cpp-python/whl/cu124" }, marker = "extra == 'extra-8-swaplang-gpu'" },
-    { name = "llama-cpp-python", version = "0.3.16", source = { registry = "https://pypi.org/simple" }, marker = "(extra == 'extra-8-swaplang-cpu' and extra == 'extra-8-swaplang-gpu') or (extra != 'extra-8-swaplang-cpu' and extra != 'extra-8-swaplang-gpu')" },
+    { name = "llama-cpp-python", version = "0.3.16", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'extra-8-swaplang-cpu' or extra != 'extra-8-swaplang-gpu'" },
     { name = "passlib" },
     { name = "pydantic-settings" },
     { name = "pyjwt" },
@@ -851,7 +826,7 @@ dependencies = [
 
 [package.optional-dependencies]
 cpu = [
-    { name = "llama-cpp-python", version = "0.3.2", source = { registry = "https://abetlen.github.io/llama-cpp-python/whl/cpu" } },
+    { name = "llama-cpp-python", version = "0.3.16", source = { registry = "https://pypi.org/simple" } },
 ]
 gpu = [
     { name = "llama-cpp-python", version = "0.3.16", source = { registry = "https://abetlen.github.io/llama-cpp-python/whl/cu124" } },
@@ -868,9 +843,9 @@ requires-dist = [
     { name = "email-validator", specifier = ">=2.3.0" },
     { name = "fastapi", specifier = ">=0.118.0" },
     { name = "huggingface-hub", specifier = ">=1.2.3" },
-    { name = "llama-cpp-python", specifier = ">=0.3.2" },
-    { name = "llama-cpp-python", marker = "extra == 'cpu'", specifier = "==0.3.2", index = "https://abetlen.github.io/llama-cpp-python/whl/cpu", conflict = { package = "swaplang", extra = "cpu" } },
-    { name = "llama-cpp-python", marker = "extra == 'gpu'", specifier = "==0.3.16", index = "https://abetlen.github.io/llama-cpp-python/whl/cu124", conflict = { package = "swaplang", extra = "gpu" } },
+    { name = "llama-cpp-python", specifier = ">=0.3.16" },
+    { name = "llama-cpp-python", marker = "extra == 'cpu'", specifier = ">=0.3.16", index = "https://pypi.org/simple", conflict = { package = "swaplang", extra = "cpu" } },
+    { name = "llama-cpp-python", marker = "extra == 'gpu'", specifier = ">=0.3.16", index = "https://abetlen.github.io/llama-cpp-python/whl/cu124", conflict = { package = "swaplang", extra = "gpu" } },
     { name = "passlib", specifier = ">=1.7.4" },
     { name = "pydantic-settings", specifier = ">=2.11.0" },
     { name = "pyjwt", specifier = ">=2.10.1" },
