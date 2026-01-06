@@ -1,6 +1,7 @@
 <div align="center">
   <h1 style="">Swaplang</h1>
   <h3>Local translator similar to Google Translate, but powered by AI.</h3>
+  <img src="assets/Swaplang%20Screenshot%20(translator).png">
 </div>
 
 ## 🧩 Technology Stack
@@ -63,6 +64,17 @@
 - [x] 🏠 **100% Self-Hosted**: Your data never leaves your server.
 - [x] 🤖 **Local AI:**: Fully offline AI processing.
 - [x] 🎨 **Modern UI**: A user-friendly, modern interface like Google Translator.
+
+## 🖼 Screenshots
+
+### Swaplang - Login
+![Login page](assets/Swaplang%20Screenshot%20(login).png)
+
+### Swaplang - Translator
+![Translator page](assets/Swaplang%20Screenshot%20(translator).png)
+
+### Swaplang - Settings
+![Settings page](assets/Swaplang%20Screenshot%20(settings).png)
 
 ## 🚀 Quick Installation
 
