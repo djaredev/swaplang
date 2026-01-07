@@ -82,12 +82,35 @@
 
 Create a `docker-compose.yaml` file with the following content:
 
+For GPU (CUDA):
+
 ```yaml
 services:
     swaplang:
         container_name: swaplang
-        # image: ghcr.io/djaredev/swaplang:latest # for CPU
         image: ghcr.io/djaredev/swaplang:latest-gpu
+        user: 1000:1000 # Change 1000:1000 to your user ID and group ID
+        ports:
+            - "3737:3737"
+        volumes:
+            - ./data:/data # Change ./data to the directory where you want the data to be stored persistently.
+        deploy:
+          resources:
+            reservations:
+              devices:
+                - driver: nvidia
+                  count: all
+                  capabilities: [gpu]
+        restart: unless-stopped
+```
+
+For CPU:
+
+```yaml
+services:
+    swaplang:
+        container_name: swaplang
+        image: ghcr.io/djaredev/swaplang:latest
         user: 1000:1000 # Change 1000:1000 to your user ID and group ID
         ports:
             - "3737:3737"
