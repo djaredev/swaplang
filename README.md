@@ -1,6 +1,7 @@
 <div align="center">
   <h1 style="">Swaplang</h1>
   <h3>Local translator similar to Google Translate, but powered by AI.</h3>
+  <img src="assets/Swaplang%20Screenshot%20(translator).png">
 </div>
 
 ## 🧩 Technology Stack
@@ -57,12 +58,23 @@
 
 ## ✨ Features
 
-- [X] 💬 **Text translation**: Translate text into different languages.
-- [X] ⏰ **Translation History**: The latest translations are saved as history.
-- [x] 🖨️ **App Settings**: Various settings for the user and translation.
+- [X] 🌎 **Text translation**: Translate text into different languages.
+- [X] 🗓️ **Translation History**: The latest translations are saved as history.
+- [x] ⚙️ **App Settings**: Various settings for the user and translation.
 - [x] 🏠 **100% Self-Hosted**: Your data never leaves your server.
 - [x] 🤖 **Local AI:**: Fully offline AI processing.
 - [x] 🎨 **Modern UI**: A user-friendly, modern interface like Google Translator.
+
+## 🖼 Screenshots
+
+### Swaplang - Login
+![Login page](assets/Swaplang%20Screenshot%20(login).png)
+
+### Swaplang - Translator
+![Translator page](assets/Swaplang%20Screenshot%20(translator).png)
+
+### Swaplang - Settings
+![Settings page](assets/Swaplang%20Screenshot%20(settings).png)
 
 ## 🚀 Quick Installation
 
@@ -108,10 +120,10 @@ Clone the repository and navigate into it
 
 ```bash
 git clone https://github.com/djaredev/swaplang.git
-cd swaplanag/
+cd swaplang/
 ```
 
-### Building Docker Image with docker build
+#### Building Docker Image with docker build
 
 Run the following command
 
@@ -130,6 +142,6 @@ docker build -f docker/Dockerfile --target cpu -t swaplang:cpu .
 
 ## 📱 Usage 
 
-Once Doc-chat has started successfully, you can access the application at:
+Once Swaplang has started successfully, you can access the application at:
 
 [http://localhost:3737](http://localhost:2727)
