@@ -59,7 +59,7 @@ class Settings(DataDir):
     def PORT(self) -> int:
         if self.ENVIRONMENT == "dev":
             return 8000
-        return 1717
+        return 3737
 
     @computed_field
     @property
